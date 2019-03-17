@@ -8,17 +8,25 @@ class mymatrix
 {
     private:
         myvector<myvector<T>> m_matrix;
-        int m_size;
+        int m_column_size;
+        int m_row_size;
     
     public:
         mymatrix();
-        ~mymatrix();
-        mymatrix(const int size);
+        ~mymatrix(){}
+        mymatrix(const int column_size, const int row_size);
         mymatrix(const mymatrix &source);
-        mymatrix operator+(const myvector<T> &source)const;
-        mymatrix operator-(const myvector<T> &source)const;
-        mymatrix operator*(const myvector<T> &source)const;
-        mymatrix operator*(const int scale);
+        
+        mymatrix<T> operator+(const mymatrix<T> &source)const;
+        mymatrix<T> operator-(const mymatrix<T> &source)const;
+        mymatrix<T> operator*(const mymatrix<T> &source)const;
+        mymatrix<T> operator*(const int scale)const;
+
+        myvector<T> operator[](int index)const;
+        myvector<T>& operator[](int index);
+        void operator=(const mymatrix<T> &source);
+        int getColumnSize()const;
+        int getRowSize()const;
 
 
 
@@ -28,6 +36,12 @@ class mymatrix
 
 
 };
+
+template <typename U>
+std::ostream& operator<<(std::ostream& os, const mymatrix<U> &obj);
+
+template <typename U>
+std::istream& operator>>(std::istream& in, mymatrix<U> &obj);
 
 #include "matrix.hpp"
 

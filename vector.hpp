@@ -128,7 +128,7 @@ double myvector<T>::operator*(const myvector<T> &source)const
     if(m_size == source.m_size)
     {
         for(int i = 0; i < m_size; i++)
-        total += (m_array[i] * source[i]);
+            total += (m_array[i] * source[i]);
         
     }
     else
