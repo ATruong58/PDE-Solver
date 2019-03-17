@@ -41,7 +41,7 @@ mymatrix<T>::mymatrix(const mymatrix &source)
 }
 
 template <typename T>
-void mymatrix<T>::operator=(const mymatrix<T> &source)
+mymatrix<T>& mymatrix<T>::operator=(const mymatrix<T> &source)
 {
     m_matrix = myvector<myvector<T>>(source.m_column_size);
 
@@ -52,6 +52,23 @@ void mymatrix<T>::operator=(const mymatrix<T> &source)
 
     m_column_size = source.m_column_size;
     m_row_size = source.m_row_size;
+
+    return *this;
+
+}
+
+template <typename T>
+mymatrix<T>& mymatrix<T>::operator=(mymatrix<T> &&source)
+{
+    m_matrix = myvector<myvector<T>>(source.m_column_size);
+
+    m_matrix = std::move(source.m_matrix);
+
+    m_column_size = source.m_column_size;
+    m_row_size = source.m_row_size;
+
+    return *this;
+
 }
 
 template <typename T>
@@ -98,19 +115,10 @@ template <typename T>
 mymatrix<T> mymatrix<T>::operator*(const mymatrix<T> &rhs)const
 {
     mymatrix<T> temp(m_column_size, rhs.m_row_size);
-    mymatrix<T> transpose(rhs.m_row_size, rhs.m_column_size);
-
+    mymatrix<T> transpose = rhs.transpose();
     
     if(m_row_size == rhs.m_column_size)
-        {
-
-        for(int i = 0; i < rhs.m_row_size; i++)
-        {
-           for(int j = 0; j < rhs.m_column_size; j++)
-           {
-               transpose[i][j] = rhs[j][i];
-           }
-        }
+    {
 
         for(int i = 0; i < m_column_size; i++)
         {
@@ -118,6 +126,29 @@ mymatrix<T> mymatrix<T>::operator*(const mymatrix<T> &rhs)const
             {
                 temp[i][j] = m_matrix[i] * transpose[j];
             }    
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+
+}
+
+template <typename T>
+myvector<T> mymatrix<T>::operator*(const myvector<T> &rhs)const
+{
+    myvector<T> temp(m_column_size);
+    
+    if(m_row_size == rhs.getSize())
+    {
+        
+        for(int i = 0; i < m_column_size; i++)
+        {
+            temp[i] = m_matrix[i] * rhs;
         }
 
     }
@@ -168,6 +199,24 @@ myvector<T>& mymatrix<T>::operator[](int index)
     {
         throw std::out_of_range( "Index out of bounds");
     }
+}
+
+template <typename T>
+mymatrix<T> mymatrix<T>::transpose()const
+{
+    mymatrix temp(m_row_size, m_column_size);
+
+    for(int i = 0; i < m_row_size; i++)
+    {
+        for(int j = 0; j < m_column_size; j++)
+        {
+            temp[i][j] = m_matrix[j][i];
+        }
+    }
+
+    return temp;
+
+
 }
 
 template <typename T>

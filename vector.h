@@ -122,6 +122,14 @@ class myvector
          */
         T& operator[](int index);
 
+         /*! Return the max element of the vector.
+         *
+         * \param index the index of the element to read.
+         * \return The biggest elemenet in the vector
+         *
+         */
+        T getmax()const;
+
         /*! Dot product 
          * \param source myvector to dot product with lhs.
          * \return a double with the value of the dot product
@@ -138,7 +146,14 @@ class myvector
          * \post Set lhs vector with copies of elements from rhs
          *       and underlying storage size equal to that of rhs's storage.
          */
-        void  operator=(const myvector<T> &source);
+        myvector<T>&  operator=(const myvector<T> &source);
+
+        /*! Operator = (move constructor)
+         *
+         * \post Set lhs vector with copies of elements from rhs
+         *       and underlying storage size equal to that of rhs's storage.
+         */
+        myvector<T>&  operator=(myvector<T> &&source);
 
 
         /*! Getter for m_size

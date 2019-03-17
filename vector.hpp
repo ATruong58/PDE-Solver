@@ -19,7 +19,7 @@ myvector<T>::myvector(const int size)
     }
 }
 
-//Copy Constructir
+//Copy Constructor
 template <typename T>
 myvector<T>::myvector(const myvector &source)
 {
@@ -35,8 +35,9 @@ myvector<T>::myvector(const myvector &source)
 
 //Operator = 
 template <typename T>
-void  myvector<T>::operator=(const myvector<T> &source)
+myvector<T>& myvector<T>::operator=(const myvector<T> &source)
 {
+    m_size = source.m_size;
     m_array = std::unique_ptr<T[]>(new T[source.m_size]);
 
     for(int i = 0; i < source.m_size; i++)
@@ -44,7 +45,18 @@ void  myvector<T>::operator=(const myvector<T> &source)
         m_array[i] = source.m_array[i];
     }
     
+    return *this;
+}
+
+template <typename T>
+myvector<T>& myvector<T>::operator=(myvector<T> &&source)
+{
     m_size = source.m_size;
+
+    m_array = std::unique_ptr<T[]>(new T[source.m_size]);
+
+    m_array = std::move(source.m_array);
+    return *this;
 }
 
 //Unary -
@@ -167,6 +179,25 @@ T& myvector<T>::operator[](int index)
     {
         throw std::out_of_range( "Index out of bounds");
     }
+}
+
+//Return biggest element in the vector
+template <typename T>
+T myvector<T>::getmax()const
+{
+    T max = 0;
+    int max_index;
+
+    for(int i = 0; i < m_size; i++)
+    {
+        if(abs(m_array[i]) > max)
+        {   
+            max = abs(m_array[i]);
+            max_index = i;
+        }
+    }
+
+    return m_array[max_index];
 }
 
 //Size getter
