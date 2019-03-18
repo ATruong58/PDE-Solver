@@ -13,7 +13,7 @@ class Gaussian_solver
 {
     public:
 
-        /* operator () Guassian Elimnation 
+        /*! operator () Guassian Elimnation 
          *
          * \param &set mymatrix class to use gussian elimnation to
          *        &b   myvector class to augment the matrix with     

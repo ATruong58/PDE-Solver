@@ -129,7 +129,7 @@ class mymatrix
 
         /*! Binary * between a matrix and a vector
          *
-         * \param source mymatrix class to subtract lhs mymatrix class value to
+         * \param rhs mymatrix class to subtract lhs mymatrix class value to
          * \return A myvector class with the product of the two with the size of the lhs column size 
          *
          * \pre Rhs mymatrix class column size and lhs mymatrix class row size must be the same 
