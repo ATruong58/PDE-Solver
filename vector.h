@@ -1,5 +1,5 @@
 /*!Name: Alan Truong                                 
- *Date: 2/12/2019                                   
+ *Date: 3/10/2019                                   
  *Course: Object Orient Numerical Method            
  *Purpose: Learn how to use OOP to make a matrix class
            and to implement the Guassian method       
@@ -45,6 +45,8 @@ class myvector
 
         /*! Paramatized Constructor
          *
+         * \pre T = 0 must be implemented
+         * 
          * \post Creates a new vector with passed in number of element
          *       with value all equal to 0
          */
@@ -52,6 +54,8 @@ class myvector
 
         /*! Copy Constructor
          *
+         * \pre T = T must be implemented
+         * 
          * \post Creates a new vector with copies of elements from source
          *       and underlying storage size equal to that of source's storage.
          */
@@ -59,7 +63,11 @@ class myvector
 
         /*! Unary - 
          *
+         * \pre T = T must be implemented
+         * 
          * \pre *= Must be defined for the calling obj
+         *      T = T must be implemented
+         *      T *-1 must be assign
          * 
          * \return a vector with lhs value multiple by -1  
          */
@@ -72,7 +80,9 @@ class myvector
          *
          * \pre Rhs myvector class and lhs myvector class must have the same size
          *      and value assign to all index in the array 
-         *      Must have -(subtraction) define
+         *      T - T must be defined
+         *      T = T must be implemented
+         * 
          * \throws std::invalid_argument is thrown if size is not the same
          * 
          */
@@ -85,7 +95,9 @@ class myvector
          *
          * \pre Rhs myvector class and lhs myvector class must have the same size
          *      and value assign to all index in the array 
-         *      Must have +(addition) define
+         *      T + T must be defined
+         *      T = T must be implemented
+         * 
          * \throws std::invalid_argument is thrown if size is not the same
          * 
          */
@@ -97,7 +109,8 @@ class myvector
          * \return A myvector class with the all value multiply with rhs
          *
          * \pre Lhs myvector class must have a reference [] operator define
-         *      Must have *(multiplication) defined
+         *      T * T must be defined
+         *      T = T must be implemented
          * 
          */
         myvector<T> operator*(const T rhs)const;
@@ -108,6 +121,7 @@ class myvector
          * \return The element at position idx is returned.
          *
          * \pre idx is within the range [0, length()).
+         * 
          * \throws std::invalid_argument is thrown if idx is out of range.
          */
         T operator[](int index)const;
@@ -118,12 +132,16 @@ class myvector
          * \return The element at position idx is returned with reference so it is changable
          *
          * \pre idx is within the range [0, length()).
+         * 
          * \throws std::invalid_argument is thrown if idx is out of range.
          */
         T& operator[](int index);
 
          /*! Return the max element of the vector.
          *
+         * \pre T > T must be define
+         *      T = T must be define
+         * 
          * \param index the index of the element to read.
          * \return The biggest elemenet in the vector
          *
@@ -137,12 +155,15 @@ class myvector
          * \pre Rhs myvector class and lhs myvector class must have the same size
          *      and value assign to all index in the array 
          *      Must have += define
+         *      T = T must be implemented
          * \throws std::invalid_argument is thrown if size is not the same
          */
         double operator*(const myvector<T> &source)const;
 
 	/*! Operator =
          *
+         * \pre T = T must be define
+         * 
          * \post Set lhs vector with copies of elements from rhs
          *       and underlying storage size equal to that of rhs's storage.
          */
@@ -150,6 +171,9 @@ class myvector
 
         /*! Operator = (move constructor)
          *
+         * \pre T = T must be define
+         *      move must be define
+         * 
          * \post Set lhs vector with copies of elements from rhs
          *       and underlying storage size equal to that of rhs's storage.
          */
@@ -162,7 +186,6 @@ class myvector
          */
         int getSize()const;
 };
-
 
         /*! Stream insertion operator for myvector class.
          *

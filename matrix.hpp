@@ -1,3 +1,4 @@
+//Default Constructor
 template <typename T>
 mymatrix<T>::mymatrix()
 {
@@ -12,6 +13,7 @@ mymatrix<T>::mymatrix()
     m_row_size = 3;
 }
 
+//Paramitized Constructor
 template <typename T>
 mymatrix<T>::mymatrix(const int column_size, const int row_size)
 {
@@ -26,6 +28,7 @@ mymatrix<T>::mymatrix(const int column_size, const int row_size)
     m_row_size = row_size;
 }
 
+//Copy Constructor
 template <typename T>
 mymatrix<T>::mymatrix(const mymatrix &source)
 {
@@ -40,6 +43,7 @@ mymatrix<T>::mymatrix(const mymatrix &source)
     m_row_size = source.m_row_size;
 }
 
+//Operator = 
 template <typename T>
 mymatrix<T>& mymatrix<T>::operator=(const mymatrix<T> &source)
 {
@@ -57,6 +61,7 @@ mymatrix<T>& mymatrix<T>::operator=(const mymatrix<T> &source)
 
 }
 
+//Operator = (move constructor)
 template <typename T>
 mymatrix<T>& mymatrix<T>::operator=(mymatrix<T> &&source)
 {
@@ -71,6 +76,7 @@ mymatrix<T>& mymatrix<T>::operator=(mymatrix<T> &&source)
 
 }
 
+//Binary + between 2 matrixs
 template <typename T>
 mymatrix<T> mymatrix<T>::operator+(const mymatrix<T> &rhs)const
 {
@@ -91,6 +97,7 @@ mymatrix<T> mymatrix<T>::operator+(const mymatrix<T> &rhs)const
     return temp;
 }
 
+//Binary - between 2 matrixs
 template <typename T>
 mymatrix<T> mymatrix<T>::operator-(const mymatrix<T> &rhs)const
 {
@@ -111,6 +118,7 @@ mymatrix<T> mymatrix<T>::operator-(const mymatrix<T> &rhs)const
     return temp;
 }
 
+//Binary * between 2 matrixs
 template <typename T>
 mymatrix<T> mymatrix<T>::operator*(const mymatrix<T> &rhs)const
 {
@@ -138,6 +146,7 @@ mymatrix<T> mymatrix<T>::operator*(const mymatrix<T> &rhs)const
 
 }
 
+//Binary * between a matrix and a vector
 template <typename T>
 myvector<T> mymatrix<T>::operator*(const myvector<T> &rhs)const
 {
@@ -162,6 +171,7 @@ myvector<T> mymatrix<T>::operator*(const myvector<T> &rhs)const
 
 }
 
+//Scalar multiplication
 template <typename T>
 mymatrix<T> mymatrix<T>::operator*(const int scale)const
 {
@@ -175,6 +185,7 @@ mymatrix<T> mymatrix<T>::operator*(const int scale)const
     return temp;
 }
 
+//Operator []
 template <typename T>
 myvector<T> mymatrix<T>::operator[](int index)const
 {
@@ -188,6 +199,7 @@ myvector<T> mymatrix<T>::operator[](int index)const
     }
 }
 
+//Operator [] with reference
 template <typename T>
 myvector<T>& mymatrix<T>::operator[](int index)
 {
@@ -201,6 +213,7 @@ myvector<T>& mymatrix<T>::operator[](int index)
     }
 }
 
+//Transpose function
 template <typename T>
 mymatrix<T> mymatrix<T>::transpose()const
 {
@@ -216,21 +229,23 @@ mymatrix<T> mymatrix<T>::transpose()const
 
     return temp;
 
-
 }
 
+//Getter for m_column_size
 template <typename T>
 int mymatrix<T>::getColumnSize()const
 {
     return m_column_size;
 }
 
+//Getter for m_row_size
 template <typename T>
 int mymatrix<T>::getRowSize()const
 {
     return m_row_size;
 }
 
+//Output
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const mymatrix<T> &obj)
 {
@@ -241,6 +256,7 @@ std::ostream& operator<<(std::ostream& os, const mymatrix<T> &obj)
     return os;  
 }
 
+//Input
 template <typename T>
 std::istream& operator>>(std::istream& in, mymatrix<T> &obj)
 {

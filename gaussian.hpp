@@ -1,3 +1,4 @@
+//Guassian Elimnation
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const mymatrix<T>& set, const myvector<T>& b)const
 {
@@ -5,6 +6,7 @@ myvector<T> Gaussian_solver::operator()(const mymatrix<T>& set, const myvector<T
     mymatrix<T> aug_matrix(set.getColumnSize(),set.getRowSize()+1);
     mymatrix<T> matrix = set;
     
+    //Make the augmented matrix
     for(int i = 0; i < set.getColumnSize(); i++)
     {
         for(int j = 0; j < set.getRowSize(); j++)
@@ -15,10 +17,8 @@ myvector<T> Gaussian_solver::operator()(const mymatrix<T>& set, const myvector<T
         aug_matrix[i][aug_matrix.getRowSize()-1] = b[i];
     }
 
-
-    
     myvector<T> x(size);
-
+    
     for(int i = 0; i < size; i++) {
         // Search for maximum in this column
         double maxEl = fabs(matrix[i][i]/matrix[i].getmax());
@@ -57,9 +57,11 @@ myvector<T> Gaussian_solver::operator()(const mymatrix<T>& set, const myvector<T
         }
     }
 
+    //Make the solution vector 
     for(int i = size-1; i >= 0; i--)
     {
-        x[i] = round(aug_matrix[i][size]/aug_matrix[i][i] *1000000.0) /1000000.0;
+        //round the number to 8 decimal place
+        x[i] = round(aug_matrix[i][size]/aug_matrix[i][i] *100000000.0) /100000000.0;
         
         for (int k = i-1 ; k >= 0; k--)
         {
