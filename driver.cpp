@@ -58,9 +58,9 @@ int main(int argc,  char * argv[])
             throw std::out_of_range( "No dataset is passed.\n");
         }
     }
-    catch (std::string message)
+    catch (std::out_of_range e)
     {
-        std::cerr << message << std::endl;
+        std::cerr << e.what() << std::endl;
     }
 
     return 0;
