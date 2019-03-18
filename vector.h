@@ -142,7 +142,6 @@ class myvector
          * \pre T > T must be define
          *      T = T must be define
          * 
-         * \param index the index of the element to read.
          * \return The biggest elemenet in the vector
          *
          */
