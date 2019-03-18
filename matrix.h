@@ -141,7 +141,7 @@ class mymatrix
          * \throws std::invalid_argument is thrown if rhs size and lhs row size are not the same
          * 
          */
-        mymatrix<T> operator*(const int scale)const;
+        myvector<T> operator*(const myvector<T> &rhs)const;
 
         /*! Scalar multiplication
          *
@@ -156,11 +156,11 @@ class mymatrix
          * \throws std::invalid_argument is thrown if rhs size and lhs row size are not the same
          * 
          */
-        myvector<T> operator*(const myvector<T> &rhs)const;
+        mymatrix<T> operator*(const int scale)const;
 
         /*! Return a myvector class of T of the element 
          *
-         * \param index the index of the vector to return in the matrix class.
+         * \param rhs the index of the vector to return in the matrix class.
          * \return The vector at position idx is returned with reference so it is changable
          *
          * \pre idx is within the range [0, length()).
@@ -171,7 +171,7 @@ class mymatrix
         
         /*! Return a myvector class of T of the element
          *
-         * \param index the index of the vector to return in the matrix class.
+         * \param rhs the index of the vector to return in the matrix class.
          * \return The element at position idx is returned.
          * 
          * \pre idx is within the range [0, length()).
