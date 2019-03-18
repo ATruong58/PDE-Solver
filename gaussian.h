@@ -16,7 +16,7 @@ class Gaussian_solver
         /*! operator () Guassian Elimnation 
          *
          * \param &set mymatrix class to use gussian elimnation to
-         *        &b   myvector class to augment the matrix with     
+         * \param b   myvector class to augment the matrix with     
          *     
          * *\return A myvector class with the solution to the augmented matrix 
          *
