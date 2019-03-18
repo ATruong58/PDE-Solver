@@ -160,7 +160,7 @@ class mymatrix
 
         /*! Return a myvector class of T of the element 
          *
-         * \param rhs the index of the vector to return in the matrix class.
+         * \param index the index of the vector to return in the matrix class.
          * \return The vector at position idx is returned with reference so it is changable
          *
          * \pre idx is within the range [0, length()).
@@ -171,7 +171,7 @@ class mymatrix
         
         /*! Return a myvector class of T of the element
          *
-         * \param rhs the index of the vector to return in the matrix class.
+         * \param index the index of the vector to return in the matrix class.
          * \return The element at position idx is returned.
          * 
          * \pre idx is within the range [0, length()).
