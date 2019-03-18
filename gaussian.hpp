@@ -17,6 +17,8 @@ myvector<T> Gaussian_solver::operator()(const mymatrix<T>& set, const myvector<T
         aug_matrix[i][aug_matrix.getRowSize()-1] = b[i];
     }
 
+    std::cout << aug_matrix;
+
     myvector<T> x(size);
     
     for(int i = 0; i < size; i++) {
