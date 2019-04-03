@@ -1,6 +1,6 @@
 //Default Constructor
 template <typename T>
-mymatrix<T>::mymatrix()
+denseMatrix<T>::denseMatrix()
 {
     m_matrix = myvector<myvector<T>>(3);
 
@@ -15,7 +15,7 @@ mymatrix<T>::mymatrix()
 
 //Paramitized Constructor
 template <typename T>
-mymatrix<T>::mymatrix(const int column_size, const int row_size)
+denseMatrix<T>::denseMatrix(const int column_size, const int row_size)
 {
     m_matrix = myvector<myvector<T>>(column_size);
 
@@ -30,7 +30,7 @@ mymatrix<T>::mymatrix(const int column_size, const int row_size)
 
 //Copy Constructor
 template <typename T>
-mymatrix<T>::mymatrix(const mymatrix &source)
+denseMatrix<T>::denseMatrix(const denseMatrix &source)
 {
     m_matrix = myvector<myvector<T>>(source.m_column_size);
 
@@ -45,7 +45,7 @@ mymatrix<T>::mymatrix(const mymatrix &source)
 
 //Operator = 
 template <typename T>
-mymatrix<T>& mymatrix<T>::operator=(const mymatrix<T> &source)
+denseMatrix<T>& denseMatrix<T>::operator=(const denseMatrix<T> &source)
 {
     m_matrix = myvector<myvector<T>>(source.m_column_size);
 
@@ -63,7 +63,7 @@ mymatrix<T>& mymatrix<T>::operator=(const mymatrix<T> &source)
 
 //Operator = (move constructor)
 template <typename T>
-mymatrix<T>& mymatrix<T>::operator=(mymatrix<T> &&source)
+denseMatrix<T>& denseMatrix<T>::operator=(denseMatrix<T> &&source)
 {
     m_matrix = myvector<myvector<T>>(source.m_column_size);
 
@@ -78,9 +78,9 @@ mymatrix<T>& mymatrix<T>::operator=(mymatrix<T> &&source)
 
 //Binary + between 2 matrixs
 template <typename T>
-mymatrix<T> mymatrix<T>::operator+(const mymatrix<T> &rhs)const
+denseMatrix<T> denseMatrix<T>::operator+(const denseMatrix<T> &rhs)const
 {
-    mymatrix<T> temp(m_column_size, m_row_size);
+    denseMatrix<T> temp(m_column_size, m_row_size);
     
     if(m_column_size == rhs.m_column_size && m_row_size == rhs.m_row_size)
         {
@@ -99,9 +99,9 @@ mymatrix<T> mymatrix<T>::operator+(const mymatrix<T> &rhs)const
 
 //Binary - between 2 matrixs
 template <typename T>
-mymatrix<T> mymatrix<T>::operator-(const mymatrix<T> &rhs)const
+denseMatrix<T> denseMatrix<T>::operator-(const denseMatrix<T> &rhs)const
 {
-    mymatrix<T> temp(m_column_size, m_row_size);
+    denseMatrix<T> temp(m_column_size, m_row_size);
     
     if(m_column_size == rhs.m_column_size && m_row_size == rhs.m_row_size)
         {
@@ -120,10 +120,10 @@ mymatrix<T> mymatrix<T>::operator-(const mymatrix<T> &rhs)const
 
 //Binary * between 2 matrixs
 template <typename T>
-mymatrix<T> mymatrix<T>::operator*(const mymatrix<T> &rhs)const
+denseMatrix<T> denseMatrix<T>::operator*(const denseMatrix<T> &rhs)const
 {
-    mymatrix<T> temp(m_column_size, rhs.m_row_size);
-    mymatrix<T> transpose = rhs.transpose();
+    denseMatrix<T> temp(m_column_size, rhs.m_row_size);
+    denseMatrix<T> transpose = rhs.transpose();
     
     if(m_row_size == rhs.m_column_size)
     {
@@ -148,7 +148,7 @@ mymatrix<T> mymatrix<T>::operator*(const mymatrix<T> &rhs)const
 
 //Binary * between a matrix and a vector
 template <typename T>
-myvector<T> mymatrix<T>::operator*(const myvector<T> &rhs)const
+myvector<T> denseMatrix<T>::operator*(const myvector<T> &rhs)const
 {
     myvector<T> temp(m_column_size);
     
@@ -173,9 +173,9 @@ myvector<T> mymatrix<T>::operator*(const myvector<T> &rhs)const
 
 //Scalar multiplication
 template <typename T>
-mymatrix<T> mymatrix<T>::operator*(const int scale)const
+denseMatrix<T> denseMatrix<T>::operator*(const int scale)const
 {
-    mymatrix<T> temp(m_column_size, m_row_size);
+    denseMatrix<T> temp(m_column_size, m_row_size);
     
     for(int i = 0; i < m_column_size; i++)
     {
@@ -187,7 +187,7 @@ mymatrix<T> mymatrix<T>::operator*(const int scale)const
 
 //Operator []
 template <typename T>
-myvector<T> mymatrix<T>::operator[](int index)const
+myvector<T> denseMatrix<T>::operator[](int index)const
 {
     if(m_column_size >= index)
     {
@@ -201,7 +201,7 @@ myvector<T> mymatrix<T>::operator[](int index)const
 
 //Operator [] with reference
 template <typename T>
-myvector<T>& mymatrix<T>::operator[](int index)
+myvector<T>& denseMatrix<T>::operator[](int index)
 {
     if(m_column_size>= index)
     {
@@ -215,9 +215,9 @@ myvector<T>& mymatrix<T>::operator[](int index)
 
 //Transpose function
 template <typename T>
-mymatrix<T> mymatrix<T>::transpose()const
+denseMatrix<T> denseMatrix<T>::transpose()const
 {
-    mymatrix temp(m_row_size, m_column_size);
+    denseMatrix temp(m_row_size, m_column_size);
 
     for(int i = 0; i < m_row_size; i++)
     {
@@ -233,21 +233,21 @@ mymatrix<T> mymatrix<T>::transpose()const
 
 //Getter for m_column_size
 template <typename T>
-int mymatrix<T>::getColumnSize()const
+int denseMatrix<T>::getColumnSize()const
 {
     return m_column_size;
 }
 
 //Getter for m_row_size
 template <typename T>
-int mymatrix<T>::getRowSize()const
+int denseMatrix<T>::getRowSize()const
 {
     return m_row_size;
 }
 
 //Output
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const mymatrix<T> &obj)
+std::ostream& operator<<(std::ostream& os, const denseMatrix<T> &obj)
 {
     for(int i = 0; i < obj.getColumnSize(); i++)
     {
@@ -258,7 +258,7 @@ std::ostream& operator<<(std::ostream& os, const mymatrix<T> &obj)
 
 //Input
 template <typename T>
-std::istream& operator>>(std::istream& in, mymatrix<T> &obj)
+std::istream& operator>>(std::istream& in, denseMatrix<T> &obj)
 {
     for(int i = 0; i < obj.getColumnSize(); i++)
     {

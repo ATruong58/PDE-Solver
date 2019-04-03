@@ -37,7 +37,7 @@ class Gaussian_solver
          * 
          */
         template <typename T>
-        myvector<T> operator()(const mymatrix<T>& set, const myvector<T>& b)const;
+        myvector<T> operator()(const denseMatrix<T>& set, const myvector<T>& b)const;
 
 };
 

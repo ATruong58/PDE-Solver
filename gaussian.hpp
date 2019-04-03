@@ -1,10 +1,10 @@
 //Guassian Elimnation
 template <typename T>
-myvector<T> Gaussian_solver::operator()(const mymatrix<T>& set, const myvector<T>& b)const
+myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvector<T>& b)const
 {
     int size = set.getColumnSize();
-    mymatrix<T> aug_matrix(set.getColumnSize(),set.getRowSize()+1);
-    mymatrix<T> matrix = set;
+    denseMatrix<T> aug_matrix(set.getColumnSize(),set.getRowSize()+1);
+    denseMatrix<T> matrix = set;
     
     //Make the augmented matrix
     for(int i = 0; i < set.getColumnSize(); i++)
