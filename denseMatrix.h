@@ -7,17 +7,15 @@
 
 #ifndef DENSEMATRIX_H
 #define DENSEMATRIX_H
-
-#include "vector.h"
-
+# include "matrix.h"
 
 /*! denseMatrix class
  *
- * denseMatrix class with overloaded operator
+ * denseMatrix class with overloaded operator inhertit matrix class
  *
  */
 template <class T>
-class denseMatrix
+class denseMatrix: public matrix<T>
 {
     private:
         myvector<myvector<T>> m_matrix;
@@ -191,6 +189,7 @@ class denseMatrix
          */
         denseMatrix<T> transpose()const;
 
+        
         /*! Getter for m_column_size
          *
          * \return m_column_size

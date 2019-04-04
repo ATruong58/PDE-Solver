@@ -3,26 +3,47 @@
 
 #include "matrix.h"
 
+/*! upperMatrix class
+ *
+ * upperMatrix class with overloaded operator inhertit matrix class
+ *
+ */
 template <class T>
-class upperMatrix : public mymatrix
+class upperMatrix : public matrix<T>
 {
-    upperMatrix();
+    private:
+        myvector<myvector<T>> m_matrix;
+        int m_size;
 
-    ~upperMatrix(){}
+    public:
+        upperMatrix();
 
-    upperMatrix(const int size);
-    
-    upperMatrix(const upperMatrix &source);
+        ~upperMatrix(){}
 
-    upperMatrix<T>& operator=(const upperMatrix &source);
+        upperMatrix(const int size);
 
-    upperMatrix<T>& operator=(upperMatrix &&source);
+        upperMatrix(const upperMatrix &source);
 
-    mymatrix<T> operator+(const mymatrix<T> &source)const;
+        upperMatrix<T>& operator=(const upperMatrix &source);
 
+        upperMatrix<T>& operator=(upperMatrix &&source);
 
+        upperMatrix<T> operator+(const upperMatrix<T> &rhs)const;
+
+        upperMatrix<T> operator-(const upperMatrix<T> &rhs)const;
+
+        upperMatrix<T> operator*(const upperMatrix<T> &rhs)const;
+
+        upperMatrix<T> operator*(const int scale)const;
+
+        T& operator()(int i, int j);
+
+        T operator()(int i, int j)const;
+
+        myvector<T> operator*(const myvector<T> &rhs)const;
 };
 
+#include "upperMatrix.hpp"
 
 
 #endif

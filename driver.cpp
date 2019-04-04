@@ -1,5 +1,6 @@
 #include "denseMatrix.h"
-#include "matrix.h"
+#include "upperMatrix.h"
+#include "lowerMatrix.h"
 #include "gaussian.h"
 #include <fstream>
 
