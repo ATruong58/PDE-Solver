@@ -190,9 +190,9 @@ T myvector<T>::getmax()const
 
     for(int i = 0; i < m_size; i++)
     {
-        if(abs(m_array[i]) > max)
+        if(fabs(m_array[i]) > max)
         {   
-            max = abs(m_array[i]);
+            max = fabs(m_array[i]);
             max_index = i;
         }
     }

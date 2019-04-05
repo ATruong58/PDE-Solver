@@ -431,7 +431,6 @@ bool denseMatrix<T>::isUpper()const
             {
                 return false;
             }
-            std::cout<<i<<j<<std::endl;
         }
     }
 
