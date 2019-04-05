@@ -181,9 +181,10 @@ class lowerMatrix : public matrix<T>
 
         /*! Return the correct element of the matrix.
          *
-         * \param i index column to read
-         *        j index row to read
-         * \return The element at position idx is returned with reference so it is changable
+         * \param i constant index column to read
+         * \param j constant index row to read
+         * 
+	 * \return The element at position idx is returned with reference so it is changable
          *
          * \pre idx is within the range [0, length()).
          * 
@@ -194,8 +195,9 @@ class lowerMatrix : public matrix<T>
 
         /*! Return the correct element of the matrix.
          *
-         * \param i index column to read
-         *        j index row to read
+         * \param i constant index column to read
+         * \param j cosntant index row to read
+	 *
          * \return The element at position idx is returned with reference so it is changable
          *         Return 0 if i < j, since user is not changing the index does not need to throw error
          *
@@ -206,12 +208,14 @@ class lowerMatrix : public matrix<T>
          */
         T operator()(const int i,const int j)const;
 
-        /*! Return a myvector class of T of the element 
+        /*! Return a myvector class of product of the vector and matrixes
          *
-         * \param index the index of the vector to return in the matrix class.
-         * \return The vector at position idx is returned with reference so it is changable
+         * \param rhs the index of the vector to return in the matrix class.
+         * \return the product of the vector and matrixes
          *
          * \pre idx is within the range [0, length()).
+	 * 	T * T must be implemented
+	 * 	T = T must be implemented
          *      lowerMatrix (int,int) must be overloaded to access data
          * 
          * \throws std::invalid_argument is thrown if idx is out of range.

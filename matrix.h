@@ -32,7 +32,7 @@ class matrix
 
         /*! Pure Virtual operator[]
          *
-         * \parameter index index to return from object 
+         * \param index index to return from object 
          * 
          * \return  a vector of the matrix class
          * 
@@ -41,7 +41,7 @@ class matrix
 
         /*! Pure Virtual operator[] with reference
          *
-         * \parameter index index to return from object 
+         * \param index index to return from object 
          * 
          * \return a vector of the matrix class with reference so user can change value
          * 
@@ -50,7 +50,7 @@ class matrix
 
         /*! Pure Virtual binaray * with a vector
          *
-         * \parameter ths myvector class to multiple matrixes by
+         * \param rhs myvector class to multiple matrixes by
          * 
          * \return a vector of the product of the myvector and matraxies
          * 
