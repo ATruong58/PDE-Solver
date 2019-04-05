@@ -30,7 +30,7 @@ upperMatrix<T>::upperMatrix(const int size)
 template <typename T>
 upperMatrix<T>::upperMatrix(const upperMatrix &source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_column_size);
+    m_matrix = myvector<myvector<T>>(source.m_size);
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -72,7 +72,7 @@ upperMatrix<T>& upperMatrix<T>::operator=(upperMatrix<T> &&source)
 
 }
 
-//Binary + between 2 matrixs
+//Binary + between 2 upperMatrixs
 template <typename T>
 upperMatrix<T> upperMatrix<T>::operator+(const upperMatrix<T> &rhs)const
 {
@@ -93,7 +93,7 @@ upperMatrix<T> upperMatrix<T>::operator+(const upperMatrix<T> &rhs)const
     return temp;
 }
 
-//Binary - between 2 matrixs
+//Binary - between 2 upperMatrixs
 template <typename T>
 upperMatrix<T> upperMatrix<T>::operator-(const upperMatrix<T> &rhs)const
 {
@@ -114,15 +114,35 @@ upperMatrix<T> upperMatrix<T>::operator-(const upperMatrix<T> &rhs)const
     return temp;
 }
 
-//Binary * between 2 matrixs
+//Binary * between 2 upperMatrixs
 template <typename T>
 upperMatrix<T> upperMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 {
     upperMatrix<T> temp(m_size);
+    upperMatrix<T> copyVector(*this);
+    lowerMatrix<T> transpose(copyVector.transpose());
     
     if(m_size == rhs.m_size)
     {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i <= j)
+                {
+                    myvector<T> tempVector1(j+1-i);
+                    myvector<T> tempVector2(j+1-i);
 
+                    for(int k = 0; k <tempVector1.getSize(); k++)
+                    {
+                        tempVector1[k] = copyVector(i,i+k);
+                        tempVector2[k] = transpose(j,k);
+                    }
+                    temp(i,j) = tempVector1 * tempVector2;
+
+                }  
+            }
+        }
     }
     else
     {
@@ -144,13 +164,19 @@ myvector<T> upperMatrix<T>::operator*(const myvector<T> &rhs)const
         
         for(int i = 0; i < m_size; i++)
         {
-            temp[i] = m_matrix[i] * rhs;
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i <= j)
+                {
+                    temp[i] = temp[i] + m_matrix[i][j-i] * rhs[j];
+                }
+            }
         }
 
     }
     else
     {
-        throw std::out_of_range( "Size not equal");
+        throw std::out_of_range( "Size naot equal");
     }
 
     return temp;
@@ -162,7 +188,7 @@ myvector<T> upperMatrix<T>::operator*(const myvector<T> &rhs)const
 template <typename T>
 upperMatrix<T> upperMatrix<T>::operator*(const int scale)const
 {
-    upperMatrix<T> temp(m_size, m_size);
+    upperMatrix<T> temp(m_size);
     
     for(int i = 0; i < m_size; i++)
     {
@@ -172,22 +198,13 @@ upperMatrix<T> upperMatrix<T>::operator*(const int scale)const
     return temp;
 }
 
-
-//Operator [] with reference
+//Operator []
 template <typename T>
-T& upperMatrix<T>::operator()(int i, int j)
+myvector<T> upperMatrix<T>::operator[](int index)const
 {
-    if(i < m_size && j < m_size)
+    if(m_size >= index)
     {
-        if(i < j)
-        {
-            return 0;
-        }
-        else
-        {
-            return m_matrix[i][j];
-        }
-        
+        return m_matrix[index];
     }
     else
     {
@@ -195,9 +212,23 @@ T& upperMatrix<T>::operator()(int i, int j)
     }
 }
 
-//Operator []
+//Operator [] with reference
 template <typename T>
-T upperMatrix<T>::operator()(int i, int j)const
+myvector<T>& upperMatrix<T>::operator[](int index)
+{
+    if(m_size >= index)
+    {
+        return m_matrix[index];
+    }
+    else
+    {
+        throw std::out_of_range( "Index out of bounds");
+    }
+}
+
+//Operator ()
+template <typename T>
+T upperMatrix<T>::operator()(const int i,const int j)const
 {
     if(i < m_size && j < m_size)
     {
@@ -215,4 +246,80 @@ T upperMatrix<T>::operator()(int i, int j)const
     {
         throw std::out_of_range( "Index out of bounds");
     }
+}
+
+//Operator () with reference
+template <typename T>
+T& upperMatrix<T>::operator()(const int i,const int j)
+{
+    if(i < m_size && j < m_size)
+    {
+        if(i > j)
+        {
+            throw std::out_of_range( "Can Not Access that index");
+        }
+        else
+        {
+            return m_matrix[i][j-i];
+        }
+        
+    }
+    else
+    {
+        throw std::out_of_range( "Index out of bounds");
+    }
+}
+
+//Transpose function
+template <typename T>
+lowerMatrix<T> upperMatrix<T>::transpose()const
+{
+    lowerMatrix<T> temp(m_size);
+    upperMatrix<T> copyMatrix(*this);
+
+    for(int i = 0; i < m_size; i++)
+    {
+        for(int j = 0+i; j < m_size; j++)
+        {
+            temp(j,i) = copyMatrix(i,j);
+        }
+    }
+
+    return temp;
+
+}
+
+//Gettter for m_size
+template <typename T>
+int upperMatrix<T>::getSize()const
+{
+    return m_size;
+}
+
+//Output
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const upperMatrix<T> &obj)
+{
+    for(int i = 0; i < obj.getSize(); i++)
+    {
+        for(int j = 0; j < obj.getSize(); j++)
+        {
+            os << obj(i,j) << " ";
+        }      
+
+       os << std::endl;
+    }
+    return os;  
+}
+
+//Input
+template <typename T>
+std::istream& operator>>(std::istream& in, upperMatrix<T> &obj)
+{
+    for(int i = 0; i < obj.getSize(); i++)
+    {
+        in >> obj[i];
+    }
+
+    return in;
 }

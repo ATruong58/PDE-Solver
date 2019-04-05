@@ -7,7 +7,9 @@
 
 #ifndef DENSEMATRIX_H
 #define DENSEMATRIX_H
-# include "matrix.h"
+#include "matrix.h"
+#include "upperMatrix.h"
+#include "lowerMatrix.h"
 
 /*! denseMatrix class
  *
@@ -75,9 +77,9 @@ class denseMatrix: public matrix<T>
         denseMatrix<T>& operator=(denseMatrix<T> &&source);
         
 
-        /*! Binary + 
+        /*! Binary + bewtween two denseMatrix
          *
-         * \param source denseMatrix class to subtract lhs denseMatrix class value to
+         * \param source denseMatrix class to add lhs denseMatrix class value to
          * \return A denseMatrix class with the sum of the two 
          *
          * \pre Rhs denseMatrix class and lhs denseMatrix class must have the same 
@@ -91,7 +93,42 @@ class denseMatrix: public matrix<T>
          */
         denseMatrix<T> operator+(const denseMatrix<T> &source)const;
 
-        /*! Binary - 
+
+        /*! Binary + bewtween a denseMatrix and an upperMatrix
+         *
+         * \param source upperMatrix class to add lhs denseMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs upperMatrix class size must be equal to lhs denseMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for upperMatrix to access data 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const upperMatrix<T> &source)const;
+
+        /*! Binary + bewtween a denseMatrix and an upperMatrix
+         *
+         * \param source lowerMatrix class to add lhs denseMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs lowerMatrix class size must be equal to lhs denseMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for lowerMatrix to access data 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const lowerMatrix<T> &source)const;
+
+        /*! Binary - bewtween 2 denseMatrix
          *
          * \param source denseMatrix class to subtract lhs denseMatrix class value to
          * \return A denseMatrix class with the difference of the two 
@@ -107,6 +144,40 @@ class denseMatrix: public matrix<T>
          */
         denseMatrix<T> operator-(const denseMatrix<T> &source)const;
 
+        /*! Binary - bewtween a denseMatrix and an upperMatrix
+         *
+         * \param source upperMatrix class to subtract lhs denseMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs denseMatrix class and lhs denseMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for lowerMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const upperMatrix<T> &source)const;
+
+        /*! Binary - bewtween a denseMatrix and an lowerMatrix
+         *
+         * \param source lowerMatrix class to subtract lhs denseMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs denseMatrix class and lhs denseMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for lowerMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const lowerMatrix<T> &source)const;
+
         /*! Binary * between two matrix
          *
          * \param source denseMatrix class to subtract lhs denseMatrix class value to
@@ -117,13 +188,51 @@ class denseMatrix: public matrix<T>
          *      and value assign to all index in the array 
          *      Parametized constructor (int,int) must be implemented
          *      T = T must be implemented
-         *      Transpose must be define
+         *      Transpose must be define for denseMatrix
          *      Must have vector dot product function define
          * 
          * \throws std::invalid_argument is thrown if rhs column size and lhs row size are not the same
          * 
          */
         denseMatrix<T> operator*(const denseMatrix<T> &source)const;
+
+        /*! Binary * bewtween a denseMatrix and an lowerMatrix
+         *
+         * \param source upperMatrix class to subtract lhs denseMatrix class value to
+         * \return A denseMatrix class with the product of the two with the size of the rhs column
+         *         and lhs row
+         *
+         * \pre Rhs upperMatrix class column size and lhs denseMatrix class row size must be the same 
+         *      and value assign to all index in the array 
+         *      Parametized constructor (int,int) must be implemented
+         *      T = T must be implemented
+         *      Transpose must be define for denseMatrix
+         *      Must have vector dot product function define
+         *      Paramter () must be implemented for lowerMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if rhs column size and lhs row size are not the same
+         * 
+         */
+        denseMatrix<T> operator*(const upperMatrix<T> &source)const;
+
+        /*! Binary * bewtween a denseMatrix and an lowerMatrix
+         *
+         * \param source lowerMatrix class to subtract lhs denseMatrix class value to
+         * \return A denseMatrix class with the product of the two with the size of the rhs column
+         *         and lhs row
+         *
+         * \pre Rhs lowerMatrix class column size and lhs denseMatrix class row size must be the same 
+         *      and value assign to all index in the array 
+         *      Parametized constructor (int,int) must be implemented
+         *      T = T must be implemented
+         *      Transpose must be define for denseMatrix
+         *      Must have vector dot product function define
+         *      Paramter () must be implemented for lowerMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if rhs column size and lhs row size are not the same
+         * 
+         */
+        denseMatrix<T> operator*(const lowerMatrix<T> &source)const;
 
         /*! Binary * between a matrix and a vector
          *

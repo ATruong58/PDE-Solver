@@ -18,13 +18,9 @@ template <class T>
 class matrix
 {
     public:
-    
-        virtual denseMatrix<T> operator+(const denseMatrix<T> &source)const = 0;
-        virtual denseMatrix<T> operator-(const denseMatrix<T> &source)const = 0;
-        virtual denseMatrix<T> operator*(const denseMatrix<T> &source)const = 0;
-        virtual denseMatrix<T> operator*(const int scale)const = 0;
-        virtual myvector<T>& operator[](int index) = 0;
+        virtual ~matrix(){}
         virtual myvector<T> operator[](int index)const = 0;
+        virtual myvector<T>& operator[](int index) = 0;
         virtual myvector<T> operator*(const myvector<T> &rhs)const = 0;       
 
 };

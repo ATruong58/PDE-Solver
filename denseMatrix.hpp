@@ -97,6 +97,54 @@ denseMatrix<T> denseMatrix<T>::operator+(const denseMatrix<T> &rhs)const
     return temp;
 }
 
+//Binary + between a denseMatrix and a upperMatrix
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator+(const upperMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp = *this;
+    
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
+    {
+        for(int i = 0; i < rhs.getSize(); i++)
+        {   
+            for(int j = i; j < rhs.getSize(); j++)
+            {
+                temp[i][j] = temp[i][j] + rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary + between a denseMatrix and a lowerMatrix
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator+(const lowerMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp = *this;
+    
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
+    {
+        for(int i = 0; i < rhs.getSize(); i++)
+        {   
+            for(int j = 0; j < i+1; j++)
+            {
+                temp[i][j] = temp[i][j] + rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
 //Binary - between 2 matrixs
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator-(const denseMatrix<T> &rhs)const
@@ -104,10 +152,58 @@ denseMatrix<T> denseMatrix<T>::operator-(const denseMatrix<T> &rhs)const
     denseMatrix<T> temp(m_column_size, m_row_size);
     
     if(m_column_size == rhs.m_column_size && m_row_size == rhs.m_row_size)
-        {
+    {
         for(int i = 0; i < m_column_size; i++)
         {
             temp[i] = m_matrix[i] - rhs.m_matrix[i];
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a denseMatrix and a upperMatrix
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator-(const upperMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(*this);
+    
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
+    {
+        for(int i = 0; i < rhs.getSize(); i++)
+        {   
+            for(int j = i; j < rhs.getSize(); j++)
+            {
+                temp[i][j] = temp[i][j] - rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a denseMatrix and a lowerMatrix
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator-(const lowerMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(*this);
+    
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
+    {
+        for(int i = 0; i < rhs.getSize(); i++)
+        {   
+            for(int j = 0; j < i+1; j++)
+            {
+                temp[i][j] = temp[i][j] - rhs(i,j);
+            }
         }
     }
     else
@@ -134,6 +230,79 @@ denseMatrix<T> denseMatrix<T>::operator*(const denseMatrix<T> &rhs)const
             {
                 temp[i][j] = m_matrix[i] * transpose[j];
             }    
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+
+}
+
+//Binary * between a denseMatrix and a upperMatrix
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator*(const upperMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_column_size, rhs.getSize());
+    lowerMatrix<T> transpose = rhs.transpose();
+    
+
+    if(m_row_size == rhs.getSize())
+    {
+
+        for(int i = 0; i < m_column_size; i++)
+        {
+            for(int j = 0; j < transpose.getSize(); j++)
+            {  
+                myvector<T> tempVect(j+1);
+                
+                for(int k = 0; k < tempVect.getSize(); k++)
+                {
+                    tempVect[k] = m_matrix[j][k];    
+                }
+
+                temp[i][j] = tempVect * transpose[j];
+            }
+            
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+
+}
+
+//Binary * between a denseMatrix and a lowerMatrix
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_column_size, rhs.getSize());
+    upperMatrix<T> transpose = rhs.transpose();
+
+    if(m_row_size == rhs.getSize())
+    {
+
+        for(int i = 0; i < m_column_size; i++)
+        {
+            for(int j = 0; j < transpose.getSize(); j++)
+            {  
+                myvector<T> tempVect(m_column_size-j);
+                
+                for(int k = 0; k < tempVect.getSize(); k++)
+                {
+                    tempVect[k] = m_matrix[j][k+j];    
+                }
+
+                temp[i][j] = tempVect * transpose[j];
+            }
+            
         }
 
     }
