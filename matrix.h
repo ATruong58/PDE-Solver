@@ -14,13 +14,47 @@
 template <class T>
 class denseMatrix;
 
+/*! matrix class
+ *
+ * abstract class for matrixies
+ *
+ */
 template <class T>
 class matrix
 {
     public:
+        /*! Pure Virtual Destructor
+         *
+         * \post Deallocate the class
+         * 
+         */
         virtual ~matrix(){}
+
+        /*! Pure Virtual operator[]
+         *
+         * \parameter index index to return from object 
+         * 
+         * \return  a vector of the matrix class
+         * 
+         */
         virtual myvector<T> operator[](int index)const = 0;
+
+        /*! Pure Virtual operator[] with reference
+         *
+         * \parameter index index to return from object 
+         * 
+         * \return a vector of the matrix class with reference so user can change value
+         * 
+         */
         virtual myvector<T>& operator[](int index) = 0;
+
+        /*! Pure Virtual binaray * with a vector
+         *
+         * \parameter ths myvector class to multiple matrixes by
+         * 
+         * \return a vector of the product of the myvector and matraxies
+         * 
+         */
         virtual myvector<T> operator*(const myvector<T> &rhs)const = 0;       
 
 };
