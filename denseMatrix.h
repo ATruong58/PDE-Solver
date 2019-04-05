@@ -298,7 +298,6 @@ class denseMatrix: public matrix<T>
          */
         denseMatrix<T> transpose()const;
 
-        
         /*! Getter for m_column_size
          *
          * \return m_column_size
@@ -310,6 +309,58 @@ class denseMatrix: public matrix<T>
          * \return m_row_size
          */
         int getRowSize()const;
+
+
+        /*! Check if matrix is an upper matrix
+         *
+         * \return true if it is an upper matrix
+         *         false if it is an lower matrix
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         getSize() must be implemented
+         *         () must be overloaded to return index
+         */
+        bool isUpper()const;
+
+        /*! Check if matrix is an lower matrix
+         *
+         * \return true if it is an lower matrix
+         *         false if it is an upper matrix
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         getSize() must be implemented
+         *         () must be overloaded to return index
+         */
+        bool isLower()const;
+
+        /*! Turn the dense matrix into a upperMatrix if isUpper is true
+         *
+         * \return a upperMatrix class with the same value as the top
+         *         half of the denseMatrix
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         () must be overloaded to return index
+         *         Paramatized constructor for upperMatrix must be implemented
+         *         isUpper must be implemented
+         */
+        upperMatrix<T> toUpper()const;
+
+        /*! Turn the dense matrix into a lowerMatrix if isUpper is true
+         *
+         * \return a lowerMatrix class with the same value as the lower
+         *         half of the denseMatrix 
+         *         
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         () must be overloaded to return index
+         *         Paramatized constructor for lowerMatrix must be implemented
+         *         isLower must be implemented
+         */
+        lowerMatrix<T> toLower()const;
 
 };
 

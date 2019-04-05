@@ -114,7 +114,7 @@ lowerMatrix<T> lowerMatrix<T>::operator-(const lowerMatrix<T> &rhs)const
     return temp;
 }
 
-//Binary * between 2 matrixs
+//Binary * between 2 lowerMatrixs
 template <typename T>
 lowerMatrix<T> lowerMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 {
@@ -139,6 +139,50 @@ lowerMatrix<T> lowerMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
                         tempVector2[k] = transpose(j,j+k);
                     }
                     temp(i,j) = tempVector1 * tempVector2;
+
+                }  
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+
+}
+
+//Binary * between a lowerMatrix and a upperMatrix
+template <typename T>
+denseMatrix<T> lowerMatrix<T>::operator*(const upperMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    lowerMatrix<T> copyVector(*this);
+    lowerMatrix<T> transpose(rhs.transpose());
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            int size = 0;
+            for(int j = 0; j < m_size; j++)
+            {
+                {
+                    if(size != copyVector[i].getSize())
+                    {
+                        size++;
+                    }
+                    myvector<T> tempVector1(size);
+                    myvector<T> tempVector2(tempVector1.getSize());
+
+                    for(int k = 0; k <tempVector1.getSize(); k++)
+                    {
+                        tempVector1[k] = copyVector(i,k);
+                        tempVector2[k] = transpose(j,k);
+                    }
+                    
+                    temp[i][j] = tempVector1 * tempVector2;
 
                 }  
             }
@@ -228,7 +272,7 @@ myvector<T>& lowerMatrix<T>::operator[](int index)
 
 //Operator ()
 template <typename T>
-T lowerMatrix<T>::operator()(int i, int j)const
+T lowerMatrix<T>::operator()(const int i,const int j)const
 {
     if(i < m_size && j < m_size)
     {
@@ -250,7 +294,7 @@ T lowerMatrix<T>::operator()(int i, int j)const
 
 //Operator () with reference
 template <typename T>
-T& lowerMatrix<T>::operator()(int i, int j)
+T& lowerMatrix<T>::operator()(const int i,const int j)
 {
     if(i < m_size && j < m_size)
     {

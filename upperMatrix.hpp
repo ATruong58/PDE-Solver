@@ -153,6 +153,51 @@ upperMatrix<T> upperMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 
 }
 
+//Binary * between a upperMatrix and a lowerMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    upperMatrix<T> copyVector(*this);
+    upperMatrix<T> transpose(rhs.transpose());
+    
+    if(m_size == rhs.getSize())
+    {
+
+        for(int i = m_size-1; i >= 0; i--)
+        {
+            int size = 0;
+            for(int j = m_size-1; j >= 0; j--)
+            {
+                {
+                    if(size != copyVector[i].getSize())
+                    {
+                        size++;
+                    }
+                    myvector<T> tempVector1(size);
+                    myvector<T> tempVector2(tempVector1.getSize());
+
+                    for(int k = 0; k < tempVector1.getSize(); k++)
+                    {
+                        tempVector1[k] = copyVector(i,m_size-k-1);
+                        tempVector2[k] = transpose(j,m_size-k-1);
+                    }
+                    
+                    temp[i][j] = tempVector1 * tempVector2;
+
+                }  
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+
+}
+
 //Binary * between a matrix and a vector
 template <typename T>
 myvector<T> upperMatrix<T>::operator*(const myvector<T> &rhs)const

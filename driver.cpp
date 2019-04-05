@@ -26,7 +26,17 @@ int main(int argc,  char * argv[])
 		        fs >> matrix[i];
 	        }
 
-
+            if(matrix.isUpper())
+            {
+                denseMatrix<double> temp(matrix);
+                upperMatrix<double> matrix = temp.toUpper();
+            }
+            else if(matrix.isLower())
+            {
+                denseMatrix<double> temp(matrix);
+                lowerMatrix<double> matrix = temp.toLower();
+            }
+            
             fs >> b_vector;
 
             myvector<double> x;

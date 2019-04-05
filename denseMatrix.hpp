@@ -414,6 +414,103 @@ int denseMatrix<T>::getRowSize()const
     return m_row_size;
 }
 
+//Check if matrix is upper
+template <typename T>
+bool denseMatrix<T>::isUpper()const
+{
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i == j && m_matrix[i][j] == 0)
+            {
+                return false;
+            }
+
+            if(i > j && m_matrix[i][j] != 0)
+            {
+                return false;
+            }
+            std::cout<<i<<j<<std::endl;
+        }
+    }
+
+    return true;
+}
+
+//Check if matrix is lower
+template <typename T>
+bool denseMatrix<T>::isLower()const
+{
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i == j && m_matrix[i][j] == 0)
+            {
+                return false;
+            }
+
+            if(i < j && m_matrix[i][j] != 0)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+//Check if matrix is upper
+template <typename T>
+upperMatrix<T> denseMatrix<T>::toUpper()const
+{
+    if(m_column_size != m_row_size)
+    {
+        throw std::out_of_range( "Not a square matrix");
+    }
+    
+    upperMatrix<T> temp(m_column_size);
+
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i <= j)
+            {
+                temp(i,j) = m_matrix[i][j];
+            }
+        }
+    }
+
+    return temp;
+}
+
+//Check if matrix is lower
+template <typename T>
+lowerMatrix<T> denseMatrix<T>::toLower()const
+{
+    if(m_column_size != m_row_size)
+    {
+        throw std::out_of_range( "Not a square matrix");
+    }
+    
+    lowerMatrix<T> temp(m_column_size);
+
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i >= j)
+            {
+                temp(i,j) = m_matrix[i][j];
+            }
+        }
+    }
+
+    return temp;
+}
+
 //Output
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const denseMatrix<T> &obj)
