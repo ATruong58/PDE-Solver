@@ -72,7 +72,7 @@ class upperMatrix : public matrix<T>
 
         /*! Binary + bewtween two upperMatrix
          *
-         * \param source upperMatrix class to add lhs upperMatrix class value to
+         * \param rhs upperMatrix class to add lhs upperMatrix class value to
          * \return A upperMatrix class with the sum of the two 
          *
          * \pre Rhs upperMatrix class and lhs upperMatrix class must have the same 
@@ -89,7 +89,7 @@ class upperMatrix : public matrix<T>
 
         /*! Binary - bewtween two upperMatrix
          *
-         * \param source upperMatrix class to subtract lhs upperMatrix class value to
+         * \param rhs upperMatrix class to subtract lhs upperMatrix class value to
          * \return A upperMatrix class with the difference of the two 
          *
          * \pre Rhs upperMatrix class and lhs upperMatrix class must have the same 
@@ -106,7 +106,7 @@ class upperMatrix : public matrix<T>
 
         /*! Binary * bewtween two upperMatrix
          *
-         * \param source upperMatrix class to multiply lhs upperMatrix class value to
+         * \param rhs upperMatrix class to multiply lhs upperMatrix class value to
          * \return A upperMatrix class with the product of the two 
          *
          * \pre Rhs upperMatrix class and lhs upperMatrix class must have the same 
@@ -123,7 +123,7 @@ class upperMatrix : public matrix<T>
 
         /*! Binary * bewtween a upperMatrix and an lowerMatrix
          *
-         * \param source lowerMatrix class to multiply lhs upperMatrix class value to
+         * \param rhs lowerMatrix class to multiply lhs upperMatrix class value to
          * \return A dense class with the multiple of the two matrixies
          *
          * \pre Rhs lowerMatrix class size must be equal to lhs upperMatrix 
@@ -178,7 +178,8 @@ class upperMatrix : public matrix<T>
 
          /*! Return the correct element of the matrix.
          *
-         * \param index the index of the element to read.
+         * \param i index column to read
+         *        j index row to read
          * \return The element at position idx is returned with reference so it is changable
          *         Return 0 if i < j, since user is not changing the index does not need to throw error
          *
@@ -191,7 +192,8 @@ class upperMatrix : public matrix<T>
 
         /*! Return the correct element of the matrix.
          *
-         * \param index the index of the element to read.
+         * \param i index column to read
+         *        j index row to read
          * \return The element at position idx is returned with reference so it is changable
          *
          * \pre idx is within the range [0, length()).
@@ -225,6 +227,11 @@ class upperMatrix : public matrix<T>
          */
         lowerMatrix<T> transpose()const;
 
+        /*! Getter for size
+         *
+         * \return m_size
+         * 
+         */
         int getSize()const;
 };
 
