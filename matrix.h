@@ -14,6 +14,21 @@
 template <class T>
 class denseMatrix;
 
+template <class T>
+class upperMatrix;
+
+template <class T>
+class lowerMatrix;
+
+template <class T>
+class diagonalMatrix;
+
+template <class T>
+class symmetrixMatrix;
+
+template <class T>
+class tridiagonalMatrix;
+
 /*! matrix class
  *
  * abstract class for matrixies

@@ -8,8 +8,6 @@
 #ifndef DENSEMATRIX_H
 #define DENSEMATRIX_H
 #include "matrix.h"
-#include "upperMatrix.h"
-#include "lowerMatrix.h"
 
 /*! denseMatrix class
  *

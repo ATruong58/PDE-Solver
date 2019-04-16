@@ -3,9 +3,6 @@
 
 #include "matrix.h"
 
-template <class T>
-class lowerMatrix;
-
 /*! upperMatrix class
  *
  * upperMatrix class with overloaded operator inhertit matrix class

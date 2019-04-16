@@ -221,7 +221,7 @@ myvector<T> upperMatrix<T>::operator*(const myvector<T> &rhs)const
     }
     else
     {
-        throw std::out_of_range( "Size naot equal");
+        throw std::out_of_range( "Size not equal");
     }
 
     return temp;
