@@ -116,7 +116,7 @@ class symmetricMatrix : public matrix<T>
          * \throws std::invalid_argument is thrown if size is not the same
          * 
          */
-        symmetricMatrix<T> operator*(const symmetricMatrix<T> &rhs)const;
+        denseMatrix<T> operator*(const symmetricMatrix<T> &rhs)const;
 
         /*! Binary * bewtween a symmetricMatrix and an lowerMatrix
          *
