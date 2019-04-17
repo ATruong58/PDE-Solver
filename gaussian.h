@@ -1,4 +1,4 @@
-#ifndef GAUSSSIAN_H
+#ifndef GAUSSIAN_H
 #define GAUSSIAN_H
 
 #include "vector.h"

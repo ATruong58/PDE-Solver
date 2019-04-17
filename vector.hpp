@@ -234,8 +234,8 @@ std::istream& operator>>(std::istream& in, myvector<T> &obj)
 template <typename T>
 void guass_Sidel(const std::vector<T>& matrix)
 {
-    std::vector<myvector<double>> diffVector;
-    std::vector<myvector<double>> a; 
+    std::vector<myvector<double> > diffVector;
+    std::vector<myvector<double> > a; 
     myvector<double> totalVector = matrix[matrix.size()-1];
     myvector<double> copied(matrix[0].getSize());
     int loop = matrix.size()-1;

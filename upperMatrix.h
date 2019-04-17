@@ -12,7 +12,7 @@ template <class T>
 class upperMatrix : public matrix<T>
 {
     private:
-        myvector<myvector<T>> m_matrix;
+        myvector<myvector<T> > m_matrix;
         int m_size;
 
     public:

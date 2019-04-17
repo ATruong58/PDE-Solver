@@ -24,7 +24,7 @@ template <class T>
 class diagonalMatrix;
 
 template <class T>
-class symmetrixMatrix;
+class symmetricMatrix;
 
 template <class T>
 class tridiagonalMatrix;

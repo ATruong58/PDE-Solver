@@ -2,7 +2,7 @@
 template <typename T>
 lowerMatrix<T>::lowerMatrix()
 {
-    m_matrix = myvector<myvector<T>>(3);
+    m_matrix = myvector<myvector<T> >(3);
 
     for(int i = 0; i < 3; i++)
     {
@@ -16,7 +16,7 @@ lowerMatrix<T>::lowerMatrix()
 template <typename T>
 lowerMatrix<T>::lowerMatrix(const int size)
 {
-    m_matrix = myvector<myvector<T>>(size);
+    m_matrix = myvector<myvector<T> >(size);
 
     for(int i = 0; i < size; i++)
     {
@@ -30,7 +30,7 @@ lowerMatrix<T>::lowerMatrix(const int size)
 template <typename T>
 lowerMatrix<T>::lowerMatrix(const lowerMatrix &source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -44,7 +44,7 @@ lowerMatrix<T>::lowerMatrix(const lowerMatrix &source)
 template <typename T>
 lowerMatrix<T>& lowerMatrix<T>::operator=(const lowerMatrix<T> &source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -62,7 +62,7 @@ lowerMatrix<T>& lowerMatrix<T>::operator=(const lowerMatrix<T> &source)
 template <typename T>
 lowerMatrix<T>& lowerMatrix<T>::operator=(lowerMatrix<T> &&source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     m_matrix = std::move(source.m_matrix);
 

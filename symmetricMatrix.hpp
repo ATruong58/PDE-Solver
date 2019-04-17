@@ -2,7 +2,7 @@
 template <typename T>
 symmetricMatrix<T>::symmetricMatrix()
 {
-    m_matrix = myvector<myvector<T>>(3);
+    m_matrix = myvector<myvector<T> >(3);
 
     for(int i = 0; i < 3; i++)
     {
@@ -16,7 +16,7 @@ symmetricMatrix<T>::symmetricMatrix()
 template <typename T>
 symmetricMatrix<T>::symmetricMatrix(const int size)
 {
-    m_matrix = myvector<myvector<T>>(size);
+    m_matrix = myvector<myvector<T> >(size);
 
     for(int i = 0; i < size; i++)
     {
@@ -30,7 +30,7 @@ symmetricMatrix<T>::symmetricMatrix(const int size)
 template <typename T>
 symmetricMatrix<T>::symmetricMatrix(const symmetricMatrix &source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -44,7 +44,7 @@ symmetricMatrix<T>::symmetricMatrix(const symmetricMatrix &source)
 template <typename T>
 symmetricMatrix<T>& symmetricMatrix<T>::operator=(const symmetricMatrix<T> &source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -62,7 +62,7 @@ symmetricMatrix<T>& symmetricMatrix<T>::operator=(const symmetricMatrix<T> &sour
 template <typename T>
 symmetricMatrix<T>& symmetricMatrix<T>::operator=(symmetricMatrix<T> &&source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     m_matrix = std::move(source.m_matrix);
 
@@ -127,7 +127,7 @@ denseMatrix<T> symmetricMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
         {
             for(int j = 0; j < rhs.m_size; j++)
             {
-                temp[i][j] =  temp[i][j] + (duplicate(i,j) * duplicate(j,i));
+                temp[i][j] =  temp[i][j] + (duplicate(i,j) * rhs(j,i));
             }    
         }
     }

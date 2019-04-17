@@ -2,7 +2,7 @@
 template <typename T>
 tridiagonalMatrix<T>::tridiagonalMatrix()
 {
-    m_matrix = myvector<myvector<T>>(3);
+    m_matrix = myvector<myvector<T> >(3);
 
     for(int i = 0; i < 3; i++)
     {   
@@ -24,7 +24,7 @@ tridiagonalMatrix<T>::tridiagonalMatrix()
 template <typename T>
 tridiagonalMatrix<T>::tridiagonalMatrix(const int size)
 {
-    m_matrix = myvector<myvector<T>>(3);
+    m_matrix = myvector<myvector<T> >(3);
 
     for(int i = 0; i < size; i++)
     {
@@ -45,7 +45,7 @@ tridiagonalMatrix<T>::tridiagonalMatrix(const int size)
 template <typename T>
 tridiagonalMatrix<T>::tridiagonalMatrix(const tridiagonalMatrix &source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     for(int i = 0; i < 3; i++)
     {
@@ -59,7 +59,7 @@ tridiagonalMatrix<T>::tridiagonalMatrix(const tridiagonalMatrix &source)
 template <typename T>
 tridiagonalMatrix<T>& tridiagonalMatrix<T>::operator=(const tridiagonalMatrix<T> &source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     for(int i = 0; i < 3; i++)
     {
@@ -76,7 +76,7 @@ tridiagonalMatrix<T>& tridiagonalMatrix<T>::operator=(const tridiagonalMatrix<T>
 template <typename T>
 tridiagonalMatrix<T>& tridiagonalMatrix<T>::operator=(tridiagonalMatrix<T> &&source)
 {
-    m_matrix = myvector<myvector<T>>(source.m_size);
+    m_matrix = myvector<myvector<T> >(source.m_size);
 
     m_matrix = std::move(source.m_matrix);
 
@@ -143,7 +143,10 @@ denseMatrix<T> tridiagonalMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)c
             {
                 for(int k = 0; k < rhs.m_size; k++)
                 {
-                    temp[i][j] =  temp[i][j] + (duplicate(i,k) * duplicate(j,k));
+                    if(i < k + 1 || k < i + 1)
+                    {
+                        temp[i][j] =  temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                    }
                 }
             }    
         }
