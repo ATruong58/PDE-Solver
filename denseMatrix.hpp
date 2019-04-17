@@ -524,17 +524,20 @@ denseMatrix<T> denseMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, rhs.m_row_size);
+    denseMatrix<T> temp(m_column_size, rhs.getSize());
     
-    if(m_row_size == rhs.m_column_size)
+    if(m_row_size == rhs.getSize())
     {
 
         for(int i = 0; i < m_column_size; i++)
         {
             for(int j = 0; j < rhs.getSize(); j++)
-            {
-                temp[i][j] = temp[i] * rhs[j];
-            }    
+            {  
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    temp[i][j] =  temp[i][j] + (m_matrix[i][k] * rhs(k,j));
+                }
+            }
         }
 
     }
