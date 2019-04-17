@@ -104,7 +104,7 @@ class tridiagonalMatrix : public matrix<T>
         /*! Binary * bewtween two tridiagonalMatrix
          *
          * \param rhs tridiagonalMatrix class to multiply lhs tridiagonalMatrix class value to
-         * \return A tridiagonalMatrix class with the product of the two 
+         * \return A denseMatrix class with the product of the two 
          *
          * \pre Rhs tridiagonalMatrix class and lhs tridiagonalMatrix class must have the same 
          *      row and column size and value assign to all index in the array 
@@ -116,7 +116,7 @@ class tridiagonalMatrix : public matrix<T>
          * \throws std::invalid_argument is thrown if size is not the same
          * 
          */
-        tridiagonalMatrix<T> operator*(const tridiagonalMatrix<T> &rhs)const;
+        denseMatrix<T> operator*(const tridiagonalMatrix<T> &rhs)const;
 
         /*! Binary * bewtween a tridiagonalMatrix and an lowerMatrix
          *
@@ -226,7 +226,7 @@ class tridiagonalMatrix : public matrix<T>
          * 
          * \throws std::invalid_argument is thrown if idx is out of range.
          */
-        lowerMatrix<T> transpose()const;
+        denseMatrix<T> transpose()const;
 
         /*! Getter for size
          *
