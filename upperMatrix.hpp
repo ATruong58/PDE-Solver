@@ -93,6 +93,131 @@ upperMatrix<T> upperMatrix<T>::operator+(const upperMatrix<T> &rhs)const
     return temp;
 }
 
+//Binary + between a upperMatrix and a lowerMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator+(const lowerMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i < j)
+                {
+                    temp[i][j] = duplicate(i,j);
+                }
+                else if(i > j)
+                {
+                    temp[i][j] = rhs(i,j);
+                }
+                else
+                {
+                    temp[i][j] = duplicate(i,j) + rhs(i,j);
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary + between a upperMatrix and a diagonalMatrix
+template <typename T>
+upperMatrix<T> upperMatrix<T>::operator+(const diagonalMatrix<T> &rhs)const
+{
+    upperMatrix<T> temp(*this);
+    
+    if(m_size == rhs.getColumnSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp(i,i) = temp(i,i) + rhs[i][i];
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary + between a upperMatrix and a tridiagonalMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator+(const tridiagonalMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getColumnSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i == j+1)
+                {
+                    temp[i][j] = rhs(i,j);
+                }
+                else if (i == j || i == j-1)
+                {
+                    temp[i][j] = duplicate(i,j) + rhs(i,j);
+                }
+                else if(i < j-1)
+                {
+                    temp[i][j] == duplicate(i,j);
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary + between a upperMatrix and a symmetricMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator+(const symmetricMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getColumnSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i > j)
+                {
+                    temp[i][j] = rhs(i,j);
+                }
+                else
+                {
+                    temp[i][j] = duplicate(i,j) + rhs(i,j);
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
 //Binary - between 2 upperMatrixs
 template <typename T>
 upperMatrix<T> upperMatrix<T>::operator-(const upperMatrix<T> &rhs)const
@@ -113,6 +238,132 @@ upperMatrix<T> upperMatrix<T>::operator-(const upperMatrix<T> &rhs)const
 
     return temp;
 }
+
+//Binary - between a upperMatrix and a lowerMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator-(const lowerMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i < j)
+                {
+                    temp[i][j] = duplicate(i,j);
+                }
+                else if(i > j)
+                {
+                    temp[i][j] = rhs(i,j);
+                }
+                else
+                {
+                    temp[i][j] = duplicate(i,j) - rhs(i,j);
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a upperMatrix and a diagonalMatrix
+template <typename T>
+upperMatrix<T> upperMatrix<T>::operator-(const diagonalMatrix<T> &rhs)const
+{
+    upperMatrix<T> temp(*this);
+    
+    if(m_size == rhs.getColumnSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp(i,i) = temp(i,i) - rhs[i][i];
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a upperMatrix and a tridiagonalMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator-(const tridiagonalMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getColumnSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i == j+1)
+                {
+                    temp[i][j] = rhs(i,j);
+                }
+                else if (i == j || i == j-1)
+                {
+                    temp[i][j] = duplicate(i,j) - rhs(i,j);
+                }
+                else if(i < j-1)
+                {
+                    temp[i][j] == duplicate(i,j);
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a upperMatrix and a symmetricMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator-(const symmetricMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getColumnSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i > j)
+                {
+                    temp[i][j] = rhs(i,j);
+                }
+                else
+                {
+                    temp[i][j] = duplicate(i,j) - rhs(i,j);
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
 
 //Binary * between 2 upperMatrixs
 template <typename T>
@@ -196,6 +447,112 @@ denseMatrix<T> upperMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 
     return temp;
 
+}
+
+//Binary * between a upperMatrix and a denseMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator*(const denseMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < rhs.getSize(); j++)
+            {  
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    temp[i][j] =  temp[i][j] + (m_matrix[i][k] * rhs(k,j));
+                }
+            }
+            
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a upperMatrix and a tridiagonalMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < rhs.getSize(); j++)
+            {  
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    temp[i][j] =  temp[i][j] + (m_matrix[i][k] * rhs(k,j));
+                }
+            }
+            
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a upperMatrix and a diagonalMatrix
+template <typename T>
+upperMatrix<T> upperMatrix<T>::operator*(const diagonalMatrix<T> &rhs)const
+{
+    upperMatrix<T> temp(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp[i] = m_matrix[i] * rhs[i];
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a upperMatrix and a symmetricMatrix
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < rhs.getSize(); j++)
+            {  
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    temp[i][j] =  temp[i][j] + (m_matrix[i][k] * rhs(k,j));
+                }
+            }
+            
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
 }
 
 //Binary * between a matrix and a vector

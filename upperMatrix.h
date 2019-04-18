@@ -84,6 +84,74 @@ class upperMatrix : public matrix<T>
          */
         upperMatrix<T> operator+(const upperMatrix<T> &rhs)const;
 
+        /*! Binary + bewtween a upperMatrix and a lowerMatrix
+         *
+         * \param rhs lowerMatrix class to add lowerMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs lowerMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and lowerMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const lowerMatrix<T> &rhs)const;
+
+        /*! Binary + bewtween a upperMatrix and a diagonalMatrix
+         *
+         * \param rhs diagonalMatrix class to add upperMatrix class value to
+         * \return A upperMatrix class with the sum of the two 
+         *
+         * \pre Rhs diagonalMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and diagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        upperMatrix<T> operator+(const diagonalMatrix<T> &rhs)const;
+
+        /*! Binary + bewtween a upperMatrix and a tridiagonalMatrix
+         *
+         * \param rhs tridiagonalMatrix class to add upperMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs tridiagonalMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and tridiagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const tridiagonalMatrix<T> &rhs)const;
+
+        /*! Binary + bewtween a upperMatrix and a symmetricMatrix
+         *
+         * \param rhs symmetricMatrix class to add upperMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs symmetricMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const symmetricMatrix<T> &rhs)const;
+
         /*! Binary - bewtween two upperMatrix
          *
          * \param rhs upperMatrix class to subtract lhs upperMatrix class value to
@@ -91,7 +159,7 @@ class upperMatrix : public matrix<T>
          *
          * \pre Rhs upperMatrix class and lhs upperMatrix class must have the same 
          *      row and column size and value assign to all index in the array 
-         *      T + T must be defined
+         *      T - T must be defined
          *      T = T must be implemented
          *      Parametized constructor (int) must be implemented
          *      Paramter (int,int) must be implemented for upperMatrix to access data
@@ -100,6 +168,75 @@ class upperMatrix : public matrix<T>
          * 
          */
         upperMatrix<T> operator-(const upperMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a upperMatrix and a lowerMatrix
+         *
+         * \param rhs lowerMatrix class to subtract lhs upperMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs lowerMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and lowerMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const lowerMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a upperMatrix and a diagonalMatrix
+         *
+         * \param rhs diagonalMatrix class to subtract lhs upperMatrix class value to
+         * \return A upperMatrix class with the difference of the two 
+         *
+         * \pre Rhs diagonalMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and diagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        upperMatrix<T> operator-(const diagonalMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a upperMatrix and a tridiagonalMatrix
+         *
+         * \param rhs tridiagonalMatrix class to subtract lhs upperMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs tridiagonalMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and tridiagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const tridiagonalMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a upperMatrix and a symmetricMatrix
+         *
+         * \param rhs symmetricMatrix class to subtract lhs upperMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs symmetricMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const symmetricMatrix<T> &rhs)const;
+
 
         /*! Binary * bewtween two upperMatrix
          *
@@ -135,6 +272,75 @@ class upperMatrix : public matrix<T>
          * 
          */
         denseMatrix<T> operator*(const lowerMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a upperMatrix and a denseMatrix
+         *
+         * \param rhs denseMatrix class to subtract lhs upperMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs denseMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T * T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and denseMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const denseMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a upperMatrix and a diagonalMatrix
+         *
+         * \param rhs diagonalMatrix class to subtract lhs upperMatrix class value to
+         * \return A upperMatrix class with the difference of the two 
+         *
+         * \pre Rhs diagonalMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T * T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and diagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        upperMatrix<T> operator*(const diagonalMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a upperMatrix and a tridiagonalMatrix
+         *
+         * \param rhs tridiagonalMatrix class to subtract lhs upperMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs tridiagonalMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T * T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and tridiagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const tridiagonalMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a upperMatrix and a symmetricMatrix
+         *
+         * \param rhs symmetricMatrix class to subtract lhs upperMatrix class value to
+         * \return A denseMatrix class with the difference of the two 
+         *
+         * \pre Rhs symmetricMatrix class and lhs upperMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T * T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for upperMatrix and symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const symmetricMatrix<T> &rhs)const;
+
 
         /*! Scalar multiplication
          *
