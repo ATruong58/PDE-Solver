@@ -109,7 +109,10 @@ denseMatrix<T> denseMatrix<T>::operator+(const upperMatrix<T> &rhs)const
         {   
             for(int j = i; j < rhs.getSize(); j++)
             {
-                temp[i][j] = temp[i][j] + rhs(i,j);
+                if(i <= j)
+                {
+                    temp[i][j] = temp[i][j] + rhs(i,j);
+                }
             }
         }
     }
@@ -133,7 +136,10 @@ denseMatrix<T> denseMatrix<T>::operator+(const lowerMatrix<T> &rhs)const
         {   
             for(int j = 0; j < i+1; j++)
             {
-                temp[i][j] = temp[i][j] + rhs(i,j);
+                if(i >= j)
+                {
+                    temp[i][j] = temp[i][j] + rhs(i,j);
+                }
             }
         }
     }
@@ -155,7 +161,7 @@ denseMatrix<T> denseMatrix<T>::operator+(const diagonalMatrix<T> &rhs)const
     {
         for(int i = 0; i < rhs.getSize(); i++)
         {   
-            temp[i][i] = temp[i][i] + rhs[i];
+            temp[i][i] = temp[i][i] + rhs[0][i];
         }
     }
     else
@@ -178,7 +184,7 @@ denseMatrix<T> denseMatrix<T>::operator+(const tridiagonalMatrix<T> &rhs)const
         {
             for(int j = 0; j < rhs.getSize(); j++)
             {
-                if(i > j + 1 || j < i + 1)
+                if(i <= j + 1 || i >= j - 1 || i == j)
                 {
                     temp[i][j] = temp[i][j] + rhs(i,j);
                 }
@@ -203,7 +209,7 @@ denseMatrix<T> denseMatrix<T>::operator+(const symmetricMatrix<T> &rhs)const
     {
         for(int i = 0; i < rhs.getSize(); i++)
         {   
-            for(int j = 0; j < i+1; j++)
+            for(int j = 0; j < rhs.getSize(); j++)
             {
                 temp[i][j] = temp[i][j] + rhs(i,j);
             }
@@ -250,7 +256,10 @@ denseMatrix<T> denseMatrix<T>::operator-(const upperMatrix<T> &rhs)const
         {   
             for(int j = i; j < rhs.getSize(); j++)
             {
-                temp[i][j] = temp[i][j] - rhs(i,j);
+                if(i <= j)
+                {
+                    temp[i][j] = temp[i][j] - rhs(i,j);
+                }
             }
         }
     }
@@ -274,7 +283,10 @@ denseMatrix<T> denseMatrix<T>::operator-(const lowerMatrix<T> &rhs)const
         {   
             for(int j = 0; j < i+1; j++)
             {
-                temp[i][j] = temp[i][j] - rhs(i,j);
+                if(i >= j)
+                {
+                    temp[i][j] = temp[i][j] - rhs(i,j);
+                }
             }
         }
     }
@@ -296,7 +308,7 @@ denseMatrix<T> denseMatrix<T>::operator-(const diagonalMatrix<T> &rhs)const
     {
         for(int i = 0; i < rhs.getSize(); i++)
         {   
-            temp[i][i] = temp[i][i] - rhs[i];
+            temp[i][i] = temp[i][i] - rhs[0][i];
         }
     }
     else
@@ -319,7 +331,7 @@ denseMatrix<T> denseMatrix<T>::operator-(const tridiagonalMatrix<T> &rhs)const
         {
             for(int j = 0; j < rhs.getSize(); j++)
             {
-                if(i > j + 1 || j < i + 1)
+                if(i <= j + 1 || i >= j - 1 || i == j)
                 {
                     temp[i][j] = temp[i][j] - rhs(i,j);
                 }
@@ -344,7 +356,7 @@ denseMatrix<T> denseMatrix<T>::operator-(const symmetricMatrix<T> &rhs)const
     {
         for(int i = 0; i < rhs.getSize(); i++)
         {   
-            for(int j = 0; j < i+1; j++)
+            for(int j = 0; j < rhs.getSize(); j++)
             {
                 temp[i][j] = temp[i][j] - rhs(i,j);
             }
@@ -391,24 +403,21 @@ template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_column_size, rhs.getSize());
-    lowerMatrix<T> transpose = rhs.transpose();
-    
 
     if(m_row_size == rhs.getSize())
     {
 
         for(int i = 0; i < m_column_size; i++)
         {
-            for(int j = 0; j < transpose.getSize(); j++)
-            {  
-                myvector<T> tempVect(j+1);
-                
-                for(int k = 0; k < tempVect.getSize(); k++)
+            for(int j = 0; j < rhs.getSize(); j++)
+            {   
+                for(int k = 0; k < rhs.getSize(); k++)
                 {
-                    tempVect[k] = m_matrix[j][k];    
+                    if(k <= j)
+                    {
+                        temp[i][j] = temp[i][j] + (m_matrix[i][k] * rhs(k,j));
+                    }
                 }
-
-                temp[i][j] = tempVect * transpose[j];
             }
             
         }
@@ -428,27 +437,23 @@ template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_column_size, rhs.getSize());
-    upperMatrix<T> transpose = rhs.transpose();
 
     if(m_row_size == rhs.getSize())
     {
-
         for(int i = 0; i < m_column_size; i++)
         {
-            for(int j = 0; j < transpose.getSize(); j++)
-            {  
-                myvector<T> tempVect(m_column_size-j);
-                
-                for(int k = 0; k < tempVect.getSize(); k++)
+            for(int j = 0; j < rhs.getSize(); j++)
+            {   
+                for(int k = 0; k < rhs.getSize(); k++)
                 {
-                    tempVect[k] = m_matrix[j][k+j];    
+                    if(k >= j)
+                    {
+                        temp[i][j] = temp[i][j] + (m_matrix[i][k] * rhs(k,j));
+                    }
                 }
-
-                temp[i][j] = tempVect * transpose[j];
             }
             
         }
-
     }
     else
     {
@@ -463,7 +468,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const diagonalMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, rhs.getSize());
+    denseMatrix<T> temp(*this);
 
     if(m_row_size == rhs.getSize())
     {
@@ -472,7 +477,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const diagonalMatrix<T> &rhs)const
         {
             for(int j = 0; j < rhs.getSize(); j++)
             {  
-                temp[i][j] = temp[i][j] * rhs[j][j];
+                temp[j][i] = temp[j][i] * rhs[0][i];
             }
             
         }
@@ -502,7 +507,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
             {  
                 for(int k = 0; k < rhs.getSize(); k++)
                 {
-                    if(i < k + 1 || k < i + 1)
+                    if(i <= k + 1 || i >= k - 1 || i == k)
                     {
                         temp[i][j] =  temp[i][j] + (m_matrix[i][k] * rhs(k,j));
                     }
@@ -538,6 +543,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
                     temp[i][j] =  temp[i][j] + (m_matrix[i][k] * rhs(k,j));
                 }
             }
+
         }
 
     }
