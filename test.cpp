@@ -11,7 +11,7 @@ using namespace std;
 
 int main()
 {
-    lowerMatrix<double> matrix1;
+    symmetricMatrix<double> matrix1;
 
     matrix1(0,0) = 1;
     matrix1(1,0) = 2;
@@ -21,7 +21,7 @@ int main()
     matrix1(2,2) = 6;
 
 
-    symmetricMatrix<double> matrix2;
+    diagonalMatrix<double> matrix2;
 
     // matrix2(0,0) = 7;
     // matrix2(0,1) = 8;
@@ -30,12 +30,12 @@ int main()
     // matrix2(1,2) = 0;
     // matrix2(2,2) = 7;
 
-    matrix2(0,0) = 6;
-    matrix2(1,0) = 7;
-    matrix2(1,1) = 8;
-    matrix2(2,0) = 9;
-    matrix2(2,1) = 1;
-    matrix2(2,2) = 2;
+    // matrix2(0,0) = 6;
+    // matrix2(1,0) = 7;
+    // matrix2(1,1) = 8;
+    // matrix2(2,0) = 9;
+    // matrix2(2,1) = 1;
+    // matrix2(2,2) = 2;
 
     // matrix2[0][0] = 1;
     // matrix2[0][1] = 2;
@@ -55,9 +55,9 @@ int main()
     // matrix2(2,1) = 6;
     // matrix2(2,2) = 7;
     
-    // matrix2(0,0) = 5;
-    // matrix2(1,1) = 4;
-    // matrix2(2,2) = 3;
+    matrix2(0,0) = 5;
+    matrix2(1,1) = 4;
+    matrix2(2,2) = 3;
 
     cout<< matrix1 << endl << matrix2 << endl;
     cout << matrix1 * matrix2;

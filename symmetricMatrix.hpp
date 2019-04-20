@@ -72,13 +72,13 @@ symmetricMatrix<T>& symmetricMatrix<T>::operator=(symmetricMatrix<T> &&source)
 
 }
 
-//Binary + between 2 matrixs
+//Binary + between 2 symmetrixMatrixs
 template <typename T>
 symmetricMatrix<T> symmetricMatrix<T>::operator+(const symmetricMatrix<T> &rhs)const
 {
-    symmetricMatrix<T> temp(m_size);
+    symmetricMatrix<T> temp(m_size,m_size);
     
-    if(m_size == rhs.m_size)
+    if(m_size == rhs.getSize())
         {
         for(int i = 0; i < m_size; i++)
         {
@@ -93,17 +93,119 @@ symmetricMatrix<T> symmetricMatrix<T>::operator+(const symmetricMatrix<T> &rhs)c
     return temp;
 }
 
-//Binary + between 2 matrixs
+//Binary + between a symmetrixMatrix and a denseMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator+(const denseMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    
+    if(m_size == rhs.getRowSize())
+    {
+        temp = rhs + *this;
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary + between a symmetrixMatrix and a tridiagonalMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator+(const tridiagonalMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    symmetricMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j< m_size; j++)
+            {
+                if(i == j || i == j+1 || i == j -1)
+                {
+                    temp[i][j] = duplicate(i,j) + rhs(i,j);
+                }
+                else
+                {
+                    temp[i][j] = duplicate(i,j);
+                }
+                
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between 2 symmetrixMatrixs
 template <typename T>
 symmetricMatrix<T> symmetricMatrix<T>::operator-(const symmetricMatrix<T> &rhs)const
 {
     symmetricMatrix<T> temp(m_size);
     
-    if(m_size == rhs.m_size)
+    if(m_size == rhs.getSize())
         {
         for(int i = 0; i < m_size; i++)
         {
             temp[i] = m_matrix[i] - rhs.m_matrix[i];
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a symmetrixMatrix and a denseMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator-(const denseMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    
+    if(m_size == rhs.getRowSize())
+    {
+        temp = *this + rhs * -1;
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a symmetrixMatrix and a tridiagonalMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator-(const tridiagonalMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    symmetricMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j< m_size; j++)
+            {
+                if(i == j || i == j+1 || i == j -1)
+                {
+                    temp[i][j] = duplicate(i,j) - rhs(i,j);
+                }
+                else
+                {
+                    temp[i][j] = duplicate(i,j);
+                }
+                
+            }
         }
     }
     else
@@ -121,13 +223,16 @@ denseMatrix<T> symmetricMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
     denseMatrix<T> temp(m_size,m_size);
     symmetricMatrix<T> duplicate(*this);
     
-    if(m_size == rhs.m_size)
+    if(m_size == rhs.getSize())
     {
         for(int i = 0; i < m_size; i++)
         {
-            for(int j = 0; j < rhs.m_size; j++)
+            for(int j = 0; j < rhs.getSize(); j++)
             {
-                temp[i][j] =  temp[i][j] + (duplicate(i,j) * rhs(j,i));
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    temp[i][j] =  temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                }
             }    
         }
     }
@@ -138,6 +243,160 @@ denseMatrix<T> symmetricMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
 
     return temp;
 
+}
+
+//Binary * between a symmetricMatrix and a upperMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator*(const upperMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    symmetricMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < rhs.getSize(); j++)
+            {  
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    if(i <= k || j >= k)
+                    {
+                        temp[i][j] =  temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                    }
+                }
+            }
+            
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a symmetricMatrix and a lowerMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    symmetricMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < rhs.getSize(); j++)
+            {  
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    if(i >= k || j <= k)
+                    {
+                        temp[i][j] =  temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                    }
+                }
+            }
+            
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a symmetricMatrix and a denseMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator*(const denseMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size, rhs.getRowSize());
+    symmetricMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getRowSize())
+    {
+
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < rhs.getRowSize(); j++)
+            {  
+                for(int k = 0; k < rhs.getRowSize(); k++)
+                {
+                    temp[i][j] =  temp[i][j] + (duplicate(i,k) * rhs[k][j]);
+                }
+            }
+
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+
+}
+
+//Binary * between a symmetricMatrix and a diagonalMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator*(const diagonalMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    symmetricMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = duplicate(i,j) * rhs[0][j];
+            }
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a symmetricMatrix and a tridiagnolMatrix
+template <typename T>
+denseMatrix<T> symmetricMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    symmetricMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < rhs.getSize(); j++)
+            {  
+                for(int k = 0; k < rhs.getSize(); k++)
+                {
+                    if(i <= k + 1 || i >= k - 1 || i == k)
+                    {
+                        temp[i][j] =  temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                    }
+                }
+            }
+            
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
 }
 
 //Scalar multiplication

@@ -525,7 +525,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
     return temp;
 }
 
-//Binary * between a symmetricMatrix and a symmetricMatrix
+//Binary * between a denseMatrix and a symmetricMatrix
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
 {

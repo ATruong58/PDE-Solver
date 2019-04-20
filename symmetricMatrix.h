@@ -84,6 +84,40 @@ class symmetricMatrix : public matrix<T>
          */
         symmetricMatrix<T> operator+(const symmetricMatrix<T> &rhs)const;
 
+        /*! Binary + bewtween a symmetricMatrix and denseMatrix
+         *
+         * \param rhs denseMatrix class to add lhs symmetricMatrix class value to
+         * \return A denseicMatrix class with the sum of the two 
+         *
+         * \pre Rhs denseMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const denseMatrix<T> &rhs)const;
+
+        /*! Binary + bewtween a symmetricMatrix and tridiagonalMatrix
+         *
+         * \param rhs tridiagonalMatrix class to add lhs symmetricMatrix class value to
+         * \return A denseicMatrix class with the sum of the two 
+         *
+         * \pre Rhs tridiagonalMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const tridiagonalMatrix<T> &rhs)const;
+
         /*! Binary - bewtween two symmetricMatrix
          *
          * \param rhs symmetricMatrix class to subtract lhs symmetricMatrix class value to
@@ -100,6 +134,40 @@ class symmetricMatrix : public matrix<T>
          * 
          */
         symmetricMatrix<T> operator-(const symmetricMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a symmetricMatrix and denseMatrix
+         *
+         * \param rhs denseMatrix class to add lhs symmetricMatrix class value to
+         * \return A denseicMatrix class with the sum of the two 
+         *
+         * \pre Rhs denseMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const denseMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a symmetricMatrix and tridiagonalMatrix
+         *
+         * \param rhs tridiagonalMatrix class to add lhs symmetricMatrix class value to
+         * \return A denseicMatrix class with the sum of the two 
+         *
+         * \pre Rhs tridiagonalMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const tridiagonalMatrix<T> &rhs)const;
 
         /*! Binary * bewtween two symmetricMatrix
          *
@@ -118,23 +186,90 @@ class symmetricMatrix : public matrix<T>
          */
         denseMatrix<T> operator*(const symmetricMatrix<T> &rhs)const;
 
-        /*! Binary * bewtween a symmetricMatrix and an lowerMatrix
+        /*! Binary * bewtween a symmetricMatrix and an upperMatrix
+         *
+         * \param rhs upperMatrix class to multiply lhs symmetricMatrix class value to
+         * \return A denseMatrix class with the product of the two 
+         *
+         * \pre Rhs upperMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix and an upperMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const upperMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a symmetricMatrix and a lowerMatrix
          *
          * \param rhs lowerMatrix class to multiply lhs symmetricMatrix class value to
-         * \return A dense class with the multiple of the two matrixies
+         * \return A denseMatrix class with the product of the two 
          *
-         * \pre Rhs lowerMatrix class size must be equal to lhs symmetricMatrix 
+         * \pre Rhs lowerMatrix class and lhs symmetricMatrix class must have the same 
          *      row and column size and value assign to all index in the array 
-         *      T * T must be defined
+         *      T + T must be defined
          *      T = T must be implemented
-         *      vector dot product must be implmented
          *      Parametized constructor (int) must be implemented
-         *      Paramter (int,int) must be implemented for lowerMatrix and symmetricMatrix to access data 
+         *      Paramter (int,int) must be implemented for symmetricMatrix and a lowerMatrix to access data
          * 
          * \throws std::invalid_argument is thrown if size is not the same
          * 
          */
         denseMatrix<T> operator*(const lowerMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a symmetricMatrix and a denseMatrix
+         *
+         * \param rhs denseMatrix class to multiply lhs symmetricMatrix class value to
+         * \return A denseMatrix class with the product of the two 
+         *
+         * \pre Rhs denseMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const denseMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a symmetricMatrix and a diagonalMatrix
+         *
+         * \param rhs diagonalMatrix class to multiply lhs symmetricMatrix class value to
+         * \return A denseMatrix class with the product of the two 
+         *
+         * \pre Rhs diagonalMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix and a diagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const diagonalMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a symmetricMatrix and a tridiagonalMatrix
+         *
+         * \param rhs tridiagonalMatrix class to multiply lhs symmetricMatrix class value to
+         * \return A denseMatrix class with the product of the two 
+         *
+         * \pre Rhs tridiagonalMatrix class and lhs symmetricMatrix class must have the same 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int) must be implemented
+         *      Paramter (int,int) must be implemented for symmetricMatrix and a tridiagonalMatrix to access data
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const tridiagonalMatrix<T> &rhs)const;
 
         /*! Scalar multiplication
          *

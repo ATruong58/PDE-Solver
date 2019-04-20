@@ -67,6 +67,73 @@ diagonalMatrix<T> diagonalMatrix<T>::operator+(const diagonalMatrix<T> &rhs)cons
     return temp;
 }
 
+//Binary + between a diagonalMatrix and a tridiagonalMatrix
+template <typename T>
+tridiagonalMatrix<T> diagonalMatrix<T>::operator+(const tridiagonalMatrix<T> &rhs)const
+{
+    tridiagonalMatrix<T> temp(rhs);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp(i,i) = duplicate(i,i) + temp(i,i);
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary + between a diagonalMatrix and a symmetricMatrix
+template <typename T>
+symmetricMatrix<T> diagonalMatrix<T>::operator+(const symmetricMatrix<T> &rhs)const
+{
+    symmetricMatrix<T> temp(rhs);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp(i,i) = duplicate(i,i) + temp(i,i);
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary + between a diagonalMatrix and a denseMatrix
+template <typename T>
+denseMatrix<T> diagonalMatrix<T>::operator+(const denseMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(rhs);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getRowSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp[i][i] = duplicate(i,i) + temp[i][i];
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+
 //Binary - between 2 diagonalMatrixs
 template <typename T>
 diagonalMatrix<T> diagonalMatrix<T>::operator-(const diagonalMatrix<T> &rhs)const
@@ -76,6 +143,69 @@ diagonalMatrix<T> diagonalMatrix<T>::operator-(const diagonalMatrix<T> &rhs)cons
     if(m_size == rhs.m_size)
     {
         temp.m_matrix = m_matrix - rhs.m_matrix;
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a diagonalMatrix and a tridiagonalMatrix
+template <typename T>
+tridiagonalMatrix<T> diagonalMatrix<T>::operator-(const tridiagonalMatrix<T> &rhs)const
+{
+    tridiagonalMatrix<T> temp(rhs);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp(i,i) = duplicate(i,i) - temp(i,i);
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a diagonalMatrix and a symmetricMatrix
+template <typename T>
+symmetricMatrix<T> diagonalMatrix<T>::operator-(const symmetricMatrix<T> &rhs)const
+{
+    symmetricMatrix<T> temp(rhs);
+
+
+    if(m_size == rhs.getSize())
+    {
+        temp = *this + rhs * -1;
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a diagonalMatrix and a denseMatrix
+template <typename T>
+denseMatrix<T> diagonalMatrix<T>::operator-(const denseMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(rhs);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getRowSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp[i][i] = duplicate(i,i) - temp[i][i];
+        }
     }
     else
     {
@@ -105,6 +235,127 @@ diagonalMatrix<T> diagonalMatrix<T>::operator*(const diagonalMatrix<T> &rhs)cons
 
     return temp;
 }
+
+//Binary * between a upperMatrix and a diagonalMatrix
+template <typename T>
+upperMatrix<T> diagonalMatrix<T>::operator*(const upperMatrix<T> &rhs)const
+{
+    upperMatrix<T> temp(rhs);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp[i] = temp[i] * m_matrix[i];
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a lowerMatrix and a diagonalMatrix
+template <typename T>
+lowerMatrix<T> diagonalMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
+{
+    lowerMatrix<T> temp(rhs);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp[i] = temp[i] * m_matrix[i];
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a denseMatrix and a diagonalMatrix
+template <typename T>
+denseMatrix<T> diagonalMatrix<T>::operator*(const denseMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(rhs);
+    
+    if(m_size == rhs.getColumnSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            temp[i] = temp[i] * m_matrix[i];
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a tridiagonalMatrix and a diagonalMatrix
+template <typename T>
+tridiagonalMatrix<T> diagonalMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
+{
+    tridiagonalMatrix<T> temp(rhs);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                if(i == j || i == j+1 || i == j-1)
+                {
+                    temp(i,j) = rhs(i,j) * m_matrix[i];
+                }
+            }
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a symmetricMatrix and a diagonalMatrix
+template <typename T>
+denseMatrix<T> diagonalMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size,m_size);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = rhs(i,j) * m_matrix[i];
+            }
+        }
+
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+
 
 //Scalar multiplication
 template <typename T>
