@@ -152,27 +152,6 @@ denseMatrix<T> denseMatrix<T>::operator*(const matrix<T> &rhs)const
     return temp;
 }
 
-//Binary + between 2 matrixs
-template <typename T>
-denseMatrix<T> denseMatrix<T>::operator+(const denseMatrix<T> &rhs)const
-{
-    denseMatrix<T> temp(m_column_size);
-    
-    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
-        {
-        for(int i = 0; i < m_column_size; i++)
-        {
-            temp[i] = m_matrix[i] + rhs.m_matrix[i];
-        }
-    }
-    else
-    {
-        throw std::out_of_range( "Size not equal");
-    }
-
-    return temp;
-}
-
 //Binary + between a denseMatrix and a upperMatrix
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator+(const upperMatrix<T> &rhs)const
@@ -289,27 +268,6 @@ denseMatrix<T> denseMatrix<T>::operator+(const symmetricMatrix<T> &rhs)const
             {
                 temp[i][j] = temp[i][j] + rhs(i,j);
             }
-        }
-    }
-    else
-    {
-        throw std::out_of_range( "Size not equal");
-    }
-
-    return temp;
-}
-
-//Binary - between 2 matrixs
-template <typename T>
-denseMatrix<T> denseMatrix<T>::operator-(const denseMatrix<T> &rhs)const
-{
-    denseMatrix<T> temp(m_column_size);
-    
-    if(m_column_size == rhs.m_column_size && m_row_size == rhs.m_row_size)
-    {
-        for(int i = 0; i < m_column_size; i++)
-        {
-            temp[i] = m_matrix[i] - rhs.m_matrix[i];
         }
     }
     else
@@ -444,34 +402,6 @@ denseMatrix<T> denseMatrix<T>::operator-(const symmetricMatrix<T> &rhs)const
     }
 
     return temp;
-}
-
-//Binary * between 2 matrixs
-template <typename T>
-denseMatrix<T> denseMatrix<T>::operator*(const denseMatrix<T> &rhs)const
-{
-    denseMatrix<T> temp(m_column_size);
-    denseMatrix<T> transpose = rhs.transpose();
-    
-    if(m_row_size == rhs.m_column_size)
-    {
-
-        for(int i = 0; i < m_column_size; i++)
-        {
-            for(int j = 0; j < rhs.m_row_size; j++)
-            {
-                temp[i][j] = m_matrix[i] * transpose[j];
-            }    
-        }
-
-    }
-    else
-    {
-        throw std::out_of_range( "Size not equal");
-    }
-
-    return temp;
-
 }
 
 //Binary * between a denseMatrix and a upperMatrix
@@ -812,7 +742,73 @@ bool denseMatrix<T>::isLower()const
     return true;
 }
 
-//Check if matrix is upper
+//Check if matrix is diagonal
+template <typename T>
+bool denseMatrix<T>::isDiagonal()const
+{
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i != j && m_matrix[i][j] != 0)
+            {
+                return false;
+            }
+
+            if(i == j && m_matrix[i][j] == 0)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+//Check if matrix is tridiagonal
+template <typename T>
+bool denseMatrix<T>::isTridiagonal()const
+{
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i <= j+1 && m_matrix[i][j] != 0)
+            {
+                return false;
+            }
+
+            if(i >= j+1 && m_matrix[i][j] != 0)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+//Check if matrix is symmetric
+template <typename T>
+bool denseMatrix<T>::isSymmetric()const
+{
+    denseMatrix<T> duplicate(*this);
+
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(duplicate(i,j) != duplicate(j,i))
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+//Convert dense matrix is upper
 template <typename T>
 upperMatrix<T> denseMatrix<T>::toUpper()const
 {
@@ -837,7 +833,7 @@ upperMatrix<T> denseMatrix<T>::toUpper()const
     return temp;
 }
 
-//Check if matrix is lower
+//Convert dense matrix is lower
 template <typename T>
 lowerMatrix<T> denseMatrix<T>::toLower()const
 {
@@ -858,7 +854,78 @@ lowerMatrix<T> denseMatrix<T>::toLower()const
             }
         }
     }
+    return temp;
+}
 
+//Convert dense matrix is diagonal
+template <typename T>
+diagonalMatrix<T> denseMatrix<T>::toDiagonal()const
+{
+    if(m_column_size != m_row_size)
+    {
+        throw std::out_of_range( "Not a square matrix");
+    }
+    
+    lowerMatrix<T> temp(m_column_size);
+
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i == j)
+            {
+                temp(i,j) = m_matrix[i][j];
+            }
+        }
+    }
+    return temp;
+}
+
+//Convert dense matrix is diagonal
+template <typename T>
+tridiagonalMatrix<T> denseMatrix<T>::toTridiagonal()const
+{
+    if(m_column_size != m_row_size)
+    {
+        throw std::out_of_range( "Not a square matrix");
+    }
+    
+    lowerMatrix<T> temp(m_column_size);
+
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i == j || i == j + 1 || i == j - 1)
+            {
+                temp(i,j) = m_matrix[i][j];
+            }
+        }
+    }
+    return temp;
+}
+
+//Convert dense matrix is symmetric
+template <typename T>
+symmetricMatrix<T> denseMatrix<T>::toSymmetric()const
+{
+    if(m_column_size != m_row_size)
+    {
+        throw std::out_of_range( "Not a square matrix");
+    }
+    
+    lowerMatrix<T> temp(m_column_size);
+
+    for(int i = 0; i < m_column_size; i++)
+    {
+        for(int j = 0; j < m_row_size; j++)
+        {
+            if(i == j)
+            {
+                temp(i,j) = m_matrix[i][j];
+            }
+        }
+    }
     return temp;
 }
 

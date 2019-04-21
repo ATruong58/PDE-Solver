@@ -77,7 +77,7 @@ template <typename T>
 denseMatrix<T> lowerMatrix<T>::operator+(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    const owerMatrix<T> duplicate(*this);
+    const lowerMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
         {

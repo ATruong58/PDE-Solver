@@ -222,24 +222,7 @@ class symmetricMatrix : public matrix<T>
          * 
          */
         denseMatrix<T> operator*(const matrix<T> &rhs)const;
-
-        /*! Binary * bewtween two symmetricMatrix
-         *
-         * \param rhs symmetricMatrix class to multiply lhs symmetricMatrix class value to
-         * \return A symmetricMatrix class with the product of the two 
-         *
-         * \pre Rhs symmetricMatrix class and lhs symmetricMatrix class must have the same 
-         *      row and column size and value assign to all index in the array 
-         *      T + T must be defined
-         *      T = T must be implemented
-         *      Parametized constructor (int) must be implemented
-         *      Paramter (int,int) must be implemented for symmetricMatrix to access data
-         * 
-         * \throws std::invalid_argument is thrown if size is not the same
-         * 
-         */
-        denseMatrix<T> operator*(const symmetricMatrix<T> &rhs)const;
-
+        
         /*! Binary * bewtween a symmetricMatrix and an upperMatrix
          *
          * \param rhs upperMatrix class to multiply lhs symmetricMatrix class value to

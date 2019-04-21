@@ -229,22 +229,6 @@ class denseMatrix: public matrix<T>
          */
         denseMatrix<T> operator*(const matrix<T> &rhs)const;
 
-        /*! Binary - bewtween 2 denseMatrix
-         *
-         * \param rhs denseMatrix class to subtract lhs denseMatrix class value to
-         * \return A denseMatrix class with the difference of the two 
-         *
-         * \pre Rhs denseMatrix class and lhs denseMatrix class must have the same 
-         *      row and column size and value assign to all index in the array 
-         *      T - T must be defined
-         *      T = T must be implemented
-         *      Parametized constructor (int,int) must be implemented
-         * 
-         * \throws std::invalid_argument is thrown if size is not the same
-         * 
-         */
-        denseMatrix<T> operator-(const denseMatrix<T> &rhs)const;
-
         /*! Binary - bewtween a denseMatrix and an upperMatrix
          *
          * \param rhs upperMatrix class to subtract lhs denseMatrix class value to
@@ -329,24 +313,6 @@ class denseMatrix: public matrix<T>
          * 
          */
         denseMatrix<T> operator-(const symmetricMatrix<T> &rhs)const;
-
-        /*! Binary * between two matrix
-         *
-         * \param rhs denseMatrix class to subtract lhs denseMatrix class value to
-         * \return A denseMatrix class with the product of the two with the size of the rhs column
-         *         and lhs row
-         *
-         * \pre Rhs denseMatrix class column size and lhs denseMatrix class row size must be the same 
-         *      and value assign to all index in the array 
-         *      Parametized constructor (int,int) must be implemented
-         *      T = T must be implemented
-         *      Transpose must be define for denseMatrix
-         *      Must have vector dot product function define
-         * 
-         * \throws std::invalid_argument is thrown if rhs column size and lhs row size are not the same
-         * 
-         */
-        denseMatrix<T> operator*(const denseMatrix<T> &rhs)const;
 
         /*! Binary * bewtween a denseMatrix and an lowerMatrix
          *

@@ -295,35 +295,6 @@ denseMatrix<T> symmetricMatrix<T>::operator-(const tridiagonalMatrix<T> &rhs)con
     return temp;
 }
 
-//Binary * between 2 symmetricMatrixs
-template <typename T>
-denseMatrix<T> symmetricMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
-{
-    denseMatrix<T> temp(m_size);
-    symmetricMatrix<T> duplicate(*this);
-    
-    if(m_size == rhs.getSize())
-    {
-        for(int i = 0; i < m_size; i++)
-        {
-            for(int j = 0; j < rhs.getSize(); j++)
-            {
-                for(int k = 0; k < rhs.getSize(); k++)
-                {
-                    temp[i][j] =  temp[i][j] + (duplicate(i,k) * rhs(k,j));
-                }
-            }    
-        }
-    }
-    else
-    {
-        throw std::out_of_range( "Size not equal");
-    }
-
-    return temp;
-
-}
-
 //Binary * between a symmetricMatrix and a upperMatrix
 template <typename T>
 denseMatrix<T> symmetricMatrix<T>::operator*(const upperMatrix<T> &rhs)const
