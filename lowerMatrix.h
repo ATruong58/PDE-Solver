@@ -67,6 +67,24 @@ class lowerMatrix : public matrix<T>
          */
         lowerMatrix<T>& operator=(lowerMatrix &&source);
 
+        /*! Binary + bewtween a lowerMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs lowerMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs lowerMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and lowerMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const matrix<T> &rhs)const;
+
         /*! Binary + bewtween two lowerMatrix
          *
          * \param rhs lowerMatrix class to add lhs lowerMatrix class value to
@@ -134,6 +152,24 @@ class lowerMatrix : public matrix<T>
          * 
          */
         denseMatrix<T> operator+(const symmetricMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a lowerMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs lowerMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs lowerMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and lowerMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const matrix<T> &rhs)const;
 
         /*! Binary - bewtween a lowerMatrix and an lowerMatrix
          *
@@ -203,6 +239,24 @@ class lowerMatrix : public matrix<T>
          * 
          */
         denseMatrix<T> operator-(const symmetricMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a lowerMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs lowerMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs lowerMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T * T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and lowerMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const matrix<T> &rhs)const;
 
         /*! Binary * bewtween a lowerMatrix and an lowerMatrix
          *

@@ -15,17 +15,17 @@ denseMatrix<T>::denseMatrix()
 
 //Paramitized Constructor
 template <typename T>
-denseMatrix<T>::denseMatrix(const int column_size, const int row_size)
+denseMatrix<T>::denseMatrix(const int size)
 {
-    m_matrix = myvector<myvector<T> >(column_size);
+    m_matrix = myvector<myvector<T> >(size);
 
-    for(int i = 0; i < column_size; i++)
+    for(int i = 0; i < size; i++)
     {
-        m_matrix[i] = myvector<T>(row_size); 
+        m_matrix[i] = myvector<T>(size); 
     }
 
-    m_column_size = column_size;
-    m_row_size = row_size;
+    m_column_size = size;
+    m_row_size = size;
 }
 
 //Copy Constructor
@@ -76,13 +76,89 @@ denseMatrix<T>& denseMatrix<T>::operator=(denseMatrix<T> &&source)
 
 }
 
+//Binary + between a dense matrix and a matrix class
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator+(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(*this);
+    
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
+        {
+        for(int i = 0; i < m_column_size; i++)
+        {
+            for(int j = 0; j < m_column_size; j++)
+            {
+                temp[i][j] = temp[i][j] + rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a dense matrix and a matrix class
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator-(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(*this);
+    
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_column_size; i++)
+        {
+            for(int j = 0; j < m_column_size; j++)
+            {
+                temp[i][j] = temp[i][j] - rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a dense matrix and a matrix class
+template <typename T>
+denseMatrix<T> denseMatrix<T>::operator*(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_row_size);
+    denseMatrix<T> duplicate(*this);
+    
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_column_size; i++)
+        {
+            for(int j = 0; j < m_column_size; j++)
+            {
+                for(int k = 0; k < m_column_size; k++)
+                {
+                    temp[i][j] = temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
 //Binary + between 2 matrixs
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator+(const denseMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, m_row_size);
+    denseMatrix<T> temp(m_column_size);
     
-    if(m_column_size == rhs.m_column_size && m_row_size == rhs.m_row_size)
+    if(m_column_size == rhs.getSize() && m_row_size == rhs.getSize())
         {
         for(int i = 0; i < m_column_size; i++)
         {
@@ -227,7 +303,7 @@ denseMatrix<T> denseMatrix<T>::operator+(const symmetricMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator-(const denseMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, m_row_size);
+    denseMatrix<T> temp(m_column_size);
     
     if(m_column_size == rhs.m_column_size && m_row_size == rhs.m_row_size)
     {
@@ -374,7 +450,7 @@ denseMatrix<T> denseMatrix<T>::operator-(const symmetricMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const denseMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, rhs.m_row_size);
+    denseMatrix<T> temp(m_column_size);
     denseMatrix<T> transpose = rhs.transpose();
     
     if(m_row_size == rhs.m_column_size)
@@ -402,7 +478,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const denseMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, rhs.getSize());
+    denseMatrix<T> temp(m_column_size);
 
     if(m_row_size == rhs.getSize())
     {
@@ -436,7 +512,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, rhs.getSize());
+    denseMatrix<T> temp(m_column_size);
 
     if(m_row_size == rhs.getSize())
     {
@@ -496,7 +572,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const diagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, rhs.getSize());
+    denseMatrix<T> temp(m_column_size);
 
     if(m_row_size == rhs.getSize())
     {
@@ -529,7 +605,7 @@ denseMatrix<T> denseMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_column_size, rhs.getSize());
+    denseMatrix<T> temp(m_column_size);
     
     if(m_row_size == rhs.getSize())
     {
@@ -585,7 +661,7 @@ myvector<T> denseMatrix<T>::operator*(const myvector<T> &rhs)const
 template <typename T>
 denseMatrix<T> denseMatrix<T>::operator*(const int scale)const
 {
-    denseMatrix<T> temp(m_column_size, m_row_size);
+    denseMatrix<T> temp(m_column_size);
     
     for(int i = 0; i < m_column_size; i++)
     {
@@ -623,6 +699,34 @@ myvector<T>& denseMatrix<T>::operator[](int index)
     }
 }
 
+//Operator ()
+template <typename T>
+T denseMatrix<T>::operator()(int i, int j)const
+{
+    if(m_column_size >= i && j >= m_row_size)
+    {
+        return m_matrix[i][j];
+    }
+    else
+    {
+        throw std::out_of_range( "Index out of bounds");
+    }
+}
+
+//Operator () with reference
+template <typename T>
+T& denseMatrix<T>::operator()(int i, int j)
+{
+    if(m_column_size>= i && j >= m_row_size)
+    {
+        return m_matrix[i][j];
+    }
+    else
+    {
+        throw std::out_of_range( "Index out of bounds");
+    }
+}
+
 //Transpose function
 template <typename T>
 denseMatrix<T> denseMatrix<T>::transpose()const
@@ -651,6 +755,13 @@ int denseMatrix<T>::getColumnSize()const
 //Getter for m_row_size
 template <typename T>
 int denseMatrix<T>::getRowSize()const
+{
+    return m_row_size;
+}
+
+//Getter for m_row_size
+template <typename T>
+int denseMatrix<T>::getSize()const
 {
     return m_row_size;
 }

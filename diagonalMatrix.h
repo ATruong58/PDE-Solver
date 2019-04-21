@@ -67,6 +67,24 @@ class diagonalMatrix : public matrix<T>
          */
         diagonalMatrix<T>& operator=(diagonalMatrix &&source);
 
+        /*! Binary + bewtween a diagonalMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs diagonalMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs diagonalMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and diagonalMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const matrix<T> &rhs)const;
+
         /*! Binary + bewtween two diagonalMatrix
          *
          * \param rhs diagonalMatrix class to add lhs diagonalMatrix class value to
@@ -135,6 +153,24 @@ class diagonalMatrix : public matrix<T>
          */
         symmetricMatrix<T> operator+(const symmetricMatrix<T> &rhs)const;
 
+        /*! Binary - bewtween a diagonalMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs diagonalMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs diagonalMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and diagonalMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const matrix<T> &rhs)const;
+
         /*! Binary - bewtween two diagonalMatrix
          *
          * \param rhs diagonalMatrix class to subtract lhs diagonalMatrix class value to
@@ -202,6 +238,24 @@ class diagonalMatrix : public matrix<T>
          * 
          */
         symmetricMatrix<T> operator-(const symmetricMatrix<T> &rhs)const;
+
+        /*! Binary * bewtween a diagonalMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs diagonalMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs diagonalMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T * T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and diagonalMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const matrix<T> &rhs)const;
 
         /*! Binary * bewtween two diagonalMatrix
          *

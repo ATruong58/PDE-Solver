@@ -60,7 +60,7 @@ int main()
     // matrix2(1,1) = 4;
     // matrix2(2,2) = 3;
 
-    cout<< matrix1 << endl << matrix2 << endl;
+    cout << matrix1 << endl << matrix2 << endl;
     cout << matrix1 * matrix2;
 
     return 0;

@@ -86,6 +86,84 @@ tridiagonalMatrix<T>& tridiagonalMatrix<T>::operator=(tridiagonalMatrix<T> &&sou
 
 }
 
+//Binary + between a  tridiagonal matrix and a matrix class
+template <typename T>
+denseMatrix<T> tridiagonalMatrix<T>::operator+(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    tridiagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+        {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = duplicate(i,j) + rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a tridiagonal matrix and a matrix class
+template <typename T>
+denseMatrix<T> tridiagonalMatrix<T>::operator-(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    tridiagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+        {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = duplicate(i,j) - rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a tridiagonal matrix and a matrix class
+template <typename T>
+denseMatrix<T> tridiagonalMatrix<T>::operator*(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    tridiagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                for(int k = 0; k < m_size; k++)
+                {
+                    temp[i][j] = temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
 //Binary + between 2 matrixs
 template <typename T>
 tridiagonalMatrix<T> tridiagonalMatrix<T>::operator+(const tridiagonalMatrix<T> &rhs)const
@@ -111,7 +189,7 @@ tridiagonalMatrix<T> tridiagonalMatrix<T>::operator+(const tridiagonalMatrix<T> 
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator+(const denseMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     
     if(m_size == rhs.getColumnSize())
     {
@@ -150,7 +228,7 @@ tridiagonalMatrix<T> tridiagonalMatrix<T>::operator-(const tridiagonalMatrix<T> 
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator-(const denseMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     
     if(m_size == rhs.getColumnSize())
     {
@@ -168,7 +246,7 @@ denseMatrix<T> tridiagonalMatrix<T>::operator-(const denseMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     const tridiagonalMatrix<T> duplicate(*this);
     
     if(m_size == rhs.m_size)
@@ -200,7 +278,7 @@ denseMatrix<T> tridiagonalMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)c
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     tridiagonalMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -232,7 +310,7 @@ denseMatrix<T> tridiagonalMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     tridiagonalMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -264,7 +342,7 @@ denseMatrix<T> tridiagonalMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator*(const denseMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size, rhs.getRowSize());
+    denseMatrix<T> temp( rhs.getRowSize());
     tridiagonalMatrix<T> duplicate(*this);
 
     if(m_size == rhs.getRowSize())
@@ -326,9 +404,9 @@ tridiagonalMatrix<T> tridiagonalMatrix<T>::operator*(const diagonalMatrix<T> &rh
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     tridiagonalMatrix<T> duplicate(*this);
-    
+
     if(m_size == rhs.getSize())
     {
         for(int i = 0; i < m_size; i++)
@@ -488,7 +566,7 @@ T& tridiagonalMatrix<T>::operator()(const int i,const int j)
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::transpose()const
 {
-    denseMatrix<T> temp(m_size, m_size);
+    denseMatrix<T> temp( m_size);
     tridiagonalMatrix duplicate(*this);
 
     for(int i = 0; i < m_size; i++)

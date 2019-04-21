@@ -44,7 +44,7 @@ class denseMatrix: public matrix<T>
          * \post Creates a new matrix with passed in column and row sizes
          *       with value all equal to 0
          */
-        denseMatrix(const int column_size, const int row_size);
+        denseMatrix(const int size);
 
         /*! Copy Constructor
          *
@@ -73,8 +73,7 @@ class denseMatrix: public matrix<T>
          *       and underlying storage size equal to that of rhs's storage.
          */
         denseMatrix<T>& operator=(denseMatrix<T> &&source);
-        
-
+    
         /*! Binary + bewtween two denseMatrix
          *
          * \param rhs denseMatrix class to add lhs denseMatrix class value to
@@ -91,6 +90,23 @@ class denseMatrix: public matrix<T>
          */
         denseMatrix<T> operator+(const denseMatrix<T> &rhs)const;
 
+        /*! Binary + bewtween a denseMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs denseMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs denseMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T + T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and denseMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator+(const matrix<T> &rhs)const;
 
         /*! Binary + bewtween a denseMatrix and an upperMatrix
          *
@@ -176,6 +192,42 @@ class denseMatrix: public matrix<T>
          * 
          */
         denseMatrix<T> operator+(const symmetricMatrix<T> &rhs)const;
+
+        /*! Binary - bewtween a denseMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs denseMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs denseMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T - T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and denseMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator-(const matrix<T> &rhs)const;
+
+        /*! Binary * bewtween a denseMatrix and an Matrix
+         *
+         * \param rhs Matrix class to add lhs denseMatrix class value to
+         * \return A denseMatrix class with the sum of the two 
+         *
+         * \pre Rhs Matrix class size must be equal to lhs denseMatrix 
+         *      row and column size and value assign to all index in the array 
+         *      T * T must be defined
+         *      T = T must be implemented
+         *      Parametized constructor (int,int) must be implemented
+         *      Paramter () must be implemented for Matrix and denseMatrix to access data
+         *      getSize must be implemented 
+         * 
+         * \throws std::invalid_argument is thrown if size is not the same
+         * 
+         */
+        denseMatrix<T> operator*(const matrix<T> &rhs)const;
 
         /*! Binary - bewtween 2 denseMatrix
          *
@@ -443,6 +495,36 @@ class denseMatrix: public matrix<T>
          * \throws std::invalid_argument is thrown if idx is out of range.
          */
         myvector<T> operator[](int index)const;
+
+        /*! Return the correct element of the matrix.
+         *
+         * \param i constant index column to read
+         * \param j constant index row to read
+	     *
+         * \return The element at position idx is returned with reference so it is changable
+         *         Return 0 if i < j, since user is not changing the index does not need to throw error
+         *
+         * \pre idx is within the range [0, length()).
+         * 
+         * \throws std::invalid_argument is thrown if idx is out of range.
+         *         
+         */
+        T operator()(const int i,const int j)const;
+
+        /*! Return the correct element of the matrix.
+         *
+         * \param i constant index column to read
+	     * \param j constant index row to read
+         * 
+	     * \return The element at position idx is returned with reference so it is changable
+         *
+         * \pre idx is within the range [0, length()).
+         * 
+         * \throws std::invalid_argument is thrown if idx is out of range.
+         *         std::invalid_argument is thrown if i < j, since lowerTriangle must be zero at those index
+         */
+        T& operator()(const int i,const int j);
+
         
         /*! Transpose the calling matrix
          *
@@ -467,6 +549,11 @@ class denseMatrix: public matrix<T>
          */
         int getRowSize()const;
 
+        /*! Getter for any size if it is a square matrix
+         *
+         * \return m_row_size
+         */
+        int getSize()const;
 
         /*! Check if matrix is an upper matrix
          *
@@ -491,6 +578,42 @@ class denseMatrix: public matrix<T>
          *         () must be overloaded to return index
          */
         bool isLower()const;
+
+        /*! Check if matrix is an diagonal matrix
+         *
+         * \return true if it is an diagonal matrix
+         *         false if it is an upper matrix
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         getSize() must be implemented
+         *         () must be overloaded to return index
+         */
+        bool isDiagonal()const;
+
+        /*! Check if matrix is an tridiagonal matrix
+         *
+         * \return true if it is an tridiagonal matrix
+         *         false if it is an upper matrix
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         getSize() must be implemented
+         *         () must be overloaded to return index
+         */
+        bool isTridiagonal()const;
+
+        /*! Check if matrix is an symmetric matrix
+         *
+         * \return true if it is an symmetric matrix
+         *         false if it is an upper matrix
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         getSize() must be implemented
+         *         () must be overloaded to return index
+         */
+        bool isSymmetric()const;
 
         /*! Turn the dense matrix into a upperMatrix if isUpper is true
          *
@@ -518,6 +641,48 @@ class denseMatrix: public matrix<T>
          *         isLower must be implemented
          */
         lowerMatrix<T> toLower()const;
+
+        /*! Turn the dense matrix into a diagonalMatrix if isUpper is true
+         *
+         * \return a diagonalMatrix class with the same value as the diagonal
+         *         half of the denseMatrix 
+         *         
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         () must be overloaded to return index
+         *         Paramatized constructor for diagonalMatrix must be implemented
+         *         isDiagonal must be implemented
+         */
+        diagonalMatrix<T> toDiagonal()const;
+
+        /*! Turn the dense matrix into a tridiagonalMatrix if isUpper is true
+         *
+         * \return a tridiagonalMatrix class with the same value as the tridiagonal
+         *         half of the denseMatrix 
+         *         
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         () must be overloaded to return index
+         *         Paramatized constructor for tridiagonalMatrix must be implemented
+         *         isTridiagonal must be implemented
+         */
+        tridiagonalMatrix<T> toTridiagonal()const;
+
+        /*! Turn the dense matrix into a symmetricMatrix if isUpper is true
+         *
+         * \return a symmetricMatrix class with the same value as the symmetric
+         *         half of the denseMatrix 
+         *         
+         * 
+         * \pre    Value must be assign to all index in matrix
+         *         T = T must be implemented
+         *         () must be overloaded to return index
+         *         Paramatized constructor for symmetricMatrix must be implemented
+         *         isSymmetric must be implemented
+         */
+        symmetricMatrix<T> toSymmetric()const;
 
 };
 

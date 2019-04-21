@@ -72,6 +72,85 @@ upperMatrix<T>& upperMatrix<T>::operator=(upperMatrix<T> &&source)
 
 }
 
+//Binary + between a upper matrix and a matrix class
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator+(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+        {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = duplicate(i,j) + rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a upper matrix and a matrix class
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator-(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+        {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = duplicate(i,j) - rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a dense matrix and a matrix class
+template <typename T>
+denseMatrix<T> upperMatrix<T>::operator*(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    upperMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                for(int k = 0; k < m_size; k++)
+                {
+                    temp[i][j] = temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+
 //Binary + between 2 upperMatrixs
 template <typename T>
 upperMatrix<T> upperMatrix<T>::operator+(const upperMatrix<T> &rhs)const
@@ -97,7 +176,7 @@ upperMatrix<T> upperMatrix<T>::operator+(const upperMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator+(const lowerMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -154,7 +233,7 @@ upperMatrix<T> upperMatrix<T>::operator+(const diagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator+(const tridiagonalMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -190,7 +269,7 @@ denseMatrix<T> upperMatrix<T>::operator+(const tridiagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator+(const symmetricMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -243,7 +322,7 @@ upperMatrix<T> upperMatrix<T>::operator-(const upperMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator-(const lowerMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -300,7 +379,7 @@ upperMatrix<T> upperMatrix<T>::operator-(const diagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator-(const tridiagonalMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -336,7 +415,7 @@ denseMatrix<T> upperMatrix<T>::operator-(const tridiagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator-(const symmetricMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -401,7 +480,7 @@ upperMatrix<T> upperMatrix<T>::operator*(const upperMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> copyVector(*this);
     upperMatrix<T> transpose(rhs.transpose());
     
@@ -446,7 +525,7 @@ denseMatrix<T> upperMatrix<T>::operator*(const lowerMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator*(const denseMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getColumnSize())
@@ -478,7 +557,7 @@ denseMatrix<T> upperMatrix<T>::operator*(const denseMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator*(const tridiagonalMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
@@ -538,7 +617,7 @@ upperMatrix<T> upperMatrix<T>::operator*(const diagonalMatrix<T> &rhs)const
 template <typename T>
 denseMatrix<T> upperMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())

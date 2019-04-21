@@ -49,6 +49,84 @@ diagonalMatrix<T>& diagonalMatrix<T>::operator=(diagonalMatrix<T> &&source)
 
 }
 
+//Binary + between a  diagonal matrix and a matrix class
+template <typename T>
+denseMatrix<T> diagonalMatrix<T>::operator+(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+        {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = duplicate(i,j) + rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary - between a diagonal matrix and a matrix class
+template <typename T>
+denseMatrix<T> diagonalMatrix<T>::operator-(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+        {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                temp[i][j] = duplicate(i,j) - rhs(i,j);
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
+//Binary * between a diagonal matrix and a matrix class
+template <typename T>
+denseMatrix<T> diagonalMatrix<T>::operator*(const matrix<T> &rhs)const
+{
+    denseMatrix<T> temp(m_size);
+    diagonalMatrix<T> duplicate(*this);
+    
+    if(m_size == rhs.getSize())
+    {
+        for(int i = 0; i < m_size; i++)
+        {
+            for(int j = 0; j < m_size; j++)
+            {
+                for(int k = 0; k < m_size; k++)
+                {
+                    temp[i][j] = temp[i][j] + (duplicate(i,k) * rhs(k,j));
+                }
+            }
+        }
+    }
+    else
+    {
+        throw std::out_of_range( "Size not equal");
+    }
+
+    return temp;
+}
+
 //Binary + between 2 diagonalMatrixs
 template <typename T>
 diagonalMatrix<T> diagonalMatrix<T>::operator+(const diagonalMatrix<T> &rhs)const
@@ -334,7 +412,7 @@ tridiagonalMatrix<T> diagonalMatrix<T>::operator*(const tridiagonalMatrix<T> &rh
 template <typename T>
 denseMatrix<T> diagonalMatrix<T>::operator*(const symmetricMatrix<T> &rhs)const
 {
-    denseMatrix<T> temp(m_size,m_size);
+    denseMatrix<T> temp(m_size);
     
     if(m_size == rhs.getSize())
     {

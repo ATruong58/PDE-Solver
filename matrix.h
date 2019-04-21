@@ -45,6 +45,33 @@ class matrix
          */
         virtual ~matrix(){}
 
+        /*! Pure Virtual operator+
+         *
+         * \param rhs matrix to add 
+         * 
+         * \return a denseMatrix of the matrix class
+         * 
+         */
+        virtual denseMatrix<T> operator+(const matrix &rhs)const = 0;
+
+        /*! Pure Virtual operator-
+         *
+         * \param rhs matrix to subtract
+         * 
+         * \return  a denseMatrix of the matrix class
+         * 
+         */
+        virtual denseMatrix<T> operator-(const matrix &rhs)const = 0;
+
+        /*! Pure Virtual operator*
+         *
+         * \param rhs matrix to multiply
+         * 
+         * \return a denseMatrix of the matrix class
+         * 
+         */
+        virtual denseMatrix<T> operator*(const matrix &rhs)const = 0;
+
         /*! Pure Virtual operator[]
          *
          * \param index index to return from object 
@@ -63,14 +90,30 @@ class matrix
          */
         virtual myvector<T>& operator[](int index) = 0;
 
-        /*! Pure Virtual binaray * with a vector
+        /*! Pure Virtual operator() with reference
          *
-         * \param rhs myvector class to multiple matrixes by
+         * \param index index to return from object 
+         * 
+         * \return a vector of the matrix class with reference so user can change value
+         * 
+         */
+        virtual T& operator()(int i, int j) = 0;
+
+        /*! Pure Virtual operator()
+         *
+         * \param index index to return from object 
+         * 
+         * \return  a vector of the matrix class
+         * 
+         */
+        virtual T operator()(int i, int j)const = 0;
+
+        /*! Pure Virtual getSize
          * 
          * \return a vector of the product of the myvector and matraxies
          * 
          */
-        virtual myvector<T> operator*(const myvector<T> &rhs)const = 0;       
+        virtual int getSize() const = 0;       
 
 };
 
