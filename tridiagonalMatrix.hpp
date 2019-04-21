@@ -86,12 +86,12 @@ tridiagonalMatrix<T>& tridiagonalMatrix<T>::operator=(tridiagonalMatrix<T> &&sou
 
 }
 
-//Binary + between a  tridiagonal matrix and a matrix class
+//Binary + between a tridiagonal matrix and a matrix class
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator+(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    tridiagonalMatrix<T> duplicate(*this);
+    const tridiagonalMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
         {
@@ -116,7 +116,7 @@ template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator-(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    tridiagonalMatrix<T> duplicate(*this);
+    const tridiagonalMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
         {
@@ -141,7 +141,7 @@ template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::operator*(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    tridiagonalMatrix<T> duplicate(*this);
+    const tridiagonalMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
     {

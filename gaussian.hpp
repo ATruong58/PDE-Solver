@@ -3,7 +3,7 @@ template <typename T>
 myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvector<T>& b)const
 {
     int size = set.getColumnSize();
-    denseMatrix<T> aug_matrix(set.getColumnSize(),set.getRowSize()+1);
+    denseMatrix<T> aug_matrix(set.getRowSize()+1);
     denseMatrix<T> matrix = set;
     
     //Make the augmented matrix

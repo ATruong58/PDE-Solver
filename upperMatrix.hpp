@@ -77,7 +77,7 @@ template <typename T>
 denseMatrix<T> upperMatrix<T>::operator+(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    upperMatrix<T> duplicate(*this);
+    const upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
         {
@@ -102,7 +102,7 @@ template <typename T>
 denseMatrix<T> upperMatrix<T>::operator-(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    upperMatrix<T> duplicate(*this);
+    const upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
         {
@@ -127,7 +127,7 @@ template <typename T>
 denseMatrix<T> upperMatrix<T>::operator*(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    upperMatrix<T> duplicate(*this);
+    const upperMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
     {

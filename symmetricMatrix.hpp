@@ -78,7 +78,7 @@ template <typename T>
 denseMatrix<T> symmetricMatrix<T>::operator+(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    symmetricMatrix<T> duplicate(*this);
+    const symmetricMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
         {
@@ -103,7 +103,7 @@ template <typename T>
 denseMatrix<T> symmetricMatrix<T>::operator-(const matrix<T> &rhs)const
 {
     denseMatrix<T> temp(m_size);
-    symmetricMatrix<T> duplicate(*this);
+    const symmetricMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
         {
