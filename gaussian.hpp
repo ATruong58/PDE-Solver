@@ -159,27 +159,24 @@ myvector<T> Gaussian_solver::operator()(const tridiagonalMatrix<T>& set, const m
     {   
         tridiagonalMatrix<T> duplicateM = set;
         myvector<T> duplicateV = b;
+        myvector<T> solution(b.getSize());
 
         int iter = set.getSize() - 1;
 
-        
-        duplicateM(0,0) = set(0,0) / set(0,0);
-        duplicateV[0] = duplicateV[0] / set(0,0);
-
-        for(int i = 1; i < iter; i++)
+        for(int i = 1; i < iter+1; i++)
         {
-            duplicateM[1][i] = duplicateM[1][i] / (duplicateM[0][i] - (duplicateM[2][i] * duplicateM[1][i-1]));
-            duplicateV[i] = (duplicateV[i] - (duplicateM[2][i] * duplicateV[i-1])) / (duplicateM[0][i] - (duplicateM[2][i] * duplicateM[1][i-1]));
+            duplicateM(i, i-1) = duplicateM(i, i-1) / duplicateM(i-1, i-1);
+            duplicateM(i,i) = duplicateM(i,i) - duplicateM(i, i-1) * duplicateM(i-1, i); 
+            duplicateV[i] = duplicateV[i] - duplicateM(i, i-1) * duplicateV[i-1];
         }
 
-        duplicateV[iter] = (duplicateV[iter] -duplicateM[2][iter] * duplicateV[iter-1]) / (duplicateM[0][iter] - duplicateM[2][iter] * duplicateM[1][iter-1]); 
+        solution[iter] = (duplicateV[iter] / duplicateM(iter,iter));
 
         for(int i = iter; i-- > 0;)
         {
-            duplicateV[i] = duplicateV[i] - (duplicateM[1][i] * duplicateV[i+1]);
+            solution[i] = (duplicateV[i] - ((duplicateM(i,i+1) * solution[i+1]))) / duplicateM(i,i);
         }
-
-        return duplicateV;
+        return solution;
     }
     else
     {
