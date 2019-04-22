@@ -938,7 +938,10 @@ std::istream& operator>>(std::istream& in, denseMatrix<T> &obj)
 {
     for(int i = 0; i < obj.getColumnSize(); i++)
     {
-        in >> obj[i];
+        if(!(in >> obj[i]))
+        {
+            throw std::runtime_error("Not enought data to fill matrix");
+        }
     }
 
     return in;

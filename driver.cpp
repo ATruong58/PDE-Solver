@@ -150,7 +150,7 @@ int main(int argc,  char * argv[])
                 denseMatrix<double> temp(matrix);
                 symmetricMatrix<double> matrix = temp.toSymmetric();
                 sameTranspose = true;
-                
+
                 std::cout << "A * A^T:\n";
 
                 std::cout <<  matrix * matrix << std::endl << std::endl << std::endl;
@@ -206,7 +206,7 @@ int main(int argc,  char * argv[])
             throw std::out_of_range( "No dataset is passed.\n");
         }
     }
-    catch (std::out_of_range e)
+    catch (std::exception& e)
     {
         std::cerr << e.what() << std::endl;
     }

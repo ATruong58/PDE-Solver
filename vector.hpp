@@ -224,7 +224,10 @@ std::istream& operator>>(std::istream& in, myvector<T> &obj)
 {
     for(int i = 0; i < obj.getSize(); i++)
     {
-        in >> obj[i];
+        if(!(in >> obj[i]))
+        {
+            throw std::runtime_error("Not enough data to read in matrix");
+        }
     }
 
     return in;
