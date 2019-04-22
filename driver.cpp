@@ -38,10 +38,7 @@ int main(int argc,  char * argv[])
                 denseMatrix<double> temp(matrix);
                 upperMatrix<double> matrix = temp.toUpper();
 
-                std::cout << matrix.transpose();
                 std::cout <<  matrix * matrix.transpose() << std::endl << std::endl << std::endl;
-
-
 
                 std::cout << "x:\n";
                 x = GS(matrix, b_vector);
@@ -67,7 +64,6 @@ int main(int argc,  char * argv[])
                 denseMatrix<double> temp(matrix);
                 lowerMatrix<double> matrix = temp.toLower();
 
-                std::cout << matrix.transpose();
                 std::cout <<  matrix * matrix.transpose() << std::endl << std::endl << std::endl;
 
                 std::cout << "x:\n";
@@ -94,7 +90,6 @@ int main(int argc,  char * argv[])
                 denseMatrix<double> temp(matrix);
                 tridiagonalMatrix<double> matrix = temp.toTridiagonal();
 
-                std::cout << matrix.transpose();
                 std::cout <<  matrix * matrix.transpose() << std::endl << std::endl << std::endl;
 
                 std::cout << "x:\n";
@@ -179,7 +174,7 @@ int main(int argc,  char * argv[])
 
                 std::cout << "A * A^T:\n";
 
-                std::cout <<  matrix * matrix << std::endl << std::endl << std::endl;
+                std::cout <<  matrix * matrix.transpose() << std::endl << std::endl << std::endl;
 
                 std::cout << "x:\n";
                 x = GS(matrix, b_vector);

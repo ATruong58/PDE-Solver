@@ -163,12 +163,11 @@ myvector<T> Gaussian_solver::operator()(const tridiagonalMatrix<T>& set, const m
         int iter = set.getSize() - 1;
 
         
-        duplicateM(0,1) = set(0,1) / set(0,0);
+        duplicateM(0,0) = set(0,0) / set(0,0);
         duplicateV[0] = duplicateV[0] / set(0,0);
 
         for(int i = 1; i < iter; i++)
         {
-            std::cout << i << std::endl;
             duplicateM[1][i] = duplicateM[1][i] / (duplicateM[0][i] - (duplicateM[2][i] * duplicateM[1][i-1]));
             duplicateV[i] = (duplicateV[i] - (duplicateM[2][i] * duplicateV[i-1])) / (duplicateM[0][i] - (duplicateM[2][i] * duplicateM[1][i-1]));
         }

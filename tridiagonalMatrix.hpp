@@ -573,7 +573,6 @@ denseMatrix<T> tridiagonalMatrix<T>::transpose()const
     {
         for(int j = 0; j < m_size; j++)
         {
-            std::cout << duplicate(j,i) << std::endl;
             temp[i][j] = duplicate(j,i);
         }
     }
