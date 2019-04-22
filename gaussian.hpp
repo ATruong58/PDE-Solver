@@ -94,6 +94,11 @@ template <typename T>
 myvector<T> Gaussian_solver::operator()(const upperMatrix<T>& set, const myvector<T>& b)const
 {
     myvector<T> solution(set.getSize());
+    
+    if(b.getSize() != set.getSize())
+    {
+        throw std::out_of_range("Size not equal");
+    }
 
     for(int i = set.getSize(); i > 0; i--)
     {
@@ -118,24 +123,115 @@ myvector<T> Gaussian_solver::operator()(const upperMatrix<T>& set, const myvecto
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const lowerMatrix<T>& set, const myvector<T>& b)const
 {
-    myvector<T> solution(set.getSize());
-
-    for(int i = 0; i < set.getSize(); i++)
+    if(set.getSize() == b.getSize())
     {
-        double sum = 0;
+        myvector<T> solution(set.getSize());
 
-        for(int j = 0; j < i+1 ; j++)
+        for(int i = 0; i < set.getSize(); i++)
         {
-            sum += solution[j] * set(i,j);
+            double sum = 0;
+
+            for(int j = 0; j < i+1 ; j++)
+            {
+                sum += solution[j] * set(i,j);
+            }
+            if(set(i,i) == 0)
+            {
+                throw std::out_of_range( "Dividing by zero");
+            }
+            solution[i] = (b[i] - sum)/set(i,i);
         }
-        if(set(i,i) == 0)
-        {
-            throw std::out_of_range( "Dividing by zero");
-        }
-        solution[i] = (b[i] - sum)/set(i,i);
+
+        return solution;
+
     }
-
-    return solution;
-
+    else
+    {
+        throw std::out_of_range("Size not equal");
+    }
 }
 
+//Thomas Algorithm for tridiaognalMatrix
+template <typename T>
+myvector<T> Gaussian_solver::operator()(const tridiagonalMatrix<T>& set, const myvector<T>& b)const
+{
+    if(set.getSize() == b.getSize())
+    {   
+        tridiagonalMatrix<T> duplicateM = set;
+        myvector<T> duplicateV = b;
+
+        int iter = set.getSize() - 1;
+
+        
+        duplicateM(0,1) = set(0,1) / set(0,0);
+        duplicateV[0] = duplicateV[0] / set(0,0);
+
+        for(int i = 1; i < iter; i++)
+        {
+            std::cout << i << std::endl;
+            duplicateM[1][i] = duplicateM[1][i] / (duplicateM[0][i] - (duplicateM[2][i] * duplicateM[1][i-1]));
+            duplicateV[i] = (duplicateV[i] - (duplicateM[2][i] * duplicateV[i-1])) / (duplicateM[0][i] - (duplicateM[2][i] * duplicateM[1][i-1]));
+        }
+
+        duplicateV[iter] = (duplicateV[iter] -duplicateM[2][iter] * duplicateV[iter-1]) / (duplicateM[0][iter] - duplicateM[2][iter] * duplicateM[1][iter-1]); 
+
+        for(int i = iter; i-- > 0;)
+        {
+            duplicateV[i] = duplicateV[i] - (duplicateM[1][i] * duplicateV[i+1]);
+        }
+
+        return duplicateV;
+    }
+    else
+    {
+        throw std::out_of_range("Size not equal");
+    }
+    
+}
+
+//Cholesky Algorithm for symmetricMatrix
+template <typename T>
+myvector<T> Gaussian_solver::operator()(const symmetricMatrix<T>& set, const myvector<T>& b)const
+{
+    if(set.getSize() == b.getSize())
+    {   
+        Gaussian_solver gs;
+        int n = set.getSize();
+        lowerMatrix<T> lower(n);
+        myvector<T> y;
+  
+        for (int i = 0; i < n; i++) 
+        { 
+            for (int j = 0; j <= i; j++) 
+            { 
+                double sum = 0; 
+    
+                if (j == i)  
+                { 
+                    for (int k = 0; k < j; k++) 
+                    {
+                        sum += pow(lower(j,k), 2); 
+                    }
+                    lower(j,j) = sqrt(set(j,j) - sum); 
+                } 
+                else 
+                {  
+                    for (int k = 0; k < j; k++) 
+                    {
+                        sum += (lower(i,k) * lower(j,k)); 
+                    }
+                    lower(i,j) = (set(i,j) - sum) / lower(j,j); 
+                } 
+            } 
+        } 
+        
+        y = gs(lower,b);
+        return gs(lower.transpose(), y);
+       
+    }
+    else
+    {
+        throw std::out_of_range("Size not equal");
+    }
+    
+}
