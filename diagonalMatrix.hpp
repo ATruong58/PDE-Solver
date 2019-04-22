@@ -39,7 +39,7 @@ diagonalMatrix<T>& diagonalMatrix<T>::operator=(const diagonalMatrix<T> &source)
 template <typename T>
 diagonalMatrix<T>& diagonalMatrix<T>::operator=(diagonalMatrix<T> &&source)
 {
-    m_matrix = myvector<myvector<T> >(source.m_size);
+    m_matrix = myvector<T>(source.m_size);
 
     m_matrix = std::move(source.m_matrix);
 

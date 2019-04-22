@@ -26,7 +26,7 @@ tridiagonalMatrix<T>::tridiagonalMatrix(const int size)
 {
     m_matrix = myvector<myvector<T> >(3);
 
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < 3; i++)
     {
         if(i == 0)
         {
@@ -566,14 +566,15 @@ T& tridiagonalMatrix<T>::operator()(const int i,const int j)
 template <typename T>
 denseMatrix<T> tridiagonalMatrix<T>::transpose()const
 {
-    denseMatrix<T> temp( m_size);
-    tridiagonalMatrix duplicate(*this);
+    denseMatrix<T> temp(m_size);
+    const tridiagonalMatrix duplicate(*this);
 
     for(int i = 0; i < m_size; i++)
     {
         for(int j = 0; j < m_size; j++)
         {
-            temp[i][j] = duplicate(i,j);
+            std::cout << duplicate(j,i) << std::endl;
+            temp[i][j] = duplicate(j,i);
         }
     }
 

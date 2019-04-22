@@ -661,7 +661,7 @@ T& denseMatrix<T>::operator()(int i, int j)
 template <typename T>
 denseMatrix<T> denseMatrix<T>::transpose()const
 {
-    denseMatrix temp(m_row_size, m_column_size);
+    denseMatrix temp(m_row_size);
 
     for(int i = 0; i < m_row_size; i++)
     {
@@ -773,12 +773,7 @@ bool denseMatrix<T>::isTridiagonal()const
     {
         for(int j = 0; j < m_row_size; j++)
         {
-            if(i <= j+1 && m_matrix[i][j] != 0)
-            {
-                return false;
-            }
-
-            if(i >= j+1 && m_matrix[i][j] != 0)
+            if((i != j+1 && i != j-1 && i != j) && m_matrix[i][j] != 0) 
             {
                 return false;
             }
@@ -792,13 +787,13 @@ bool denseMatrix<T>::isTridiagonal()const
 template <typename T>
 bool denseMatrix<T>::isSymmetric()const
 {
-    denseMatrix<T> duplicate(*this);
+    const denseMatrix<T> duplicate(*this);
 
     for(int i = 0; i < m_column_size; i++)
     {
         for(int j = 0; j < m_row_size; j++)
         {
-            if(duplicate(i,j) != duplicate(j,i))
+            if(duplicate[i][j] != duplicate[j][i])
             {
                 return false;
             }
@@ -866,7 +861,7 @@ diagonalMatrix<T> denseMatrix<T>::toDiagonal()const
         throw std::out_of_range( "Not a square matrix");
     }
     
-    lowerMatrix<T> temp(m_column_size);
+    diagonalMatrix<T> temp(m_column_size);
 
     for(int i = 0; i < m_column_size; i++)
     {
@@ -881,7 +876,7 @@ diagonalMatrix<T> denseMatrix<T>::toDiagonal()const
     return temp;
 }
 
-//Convert dense matrix is diagonal
+//Convert dense matrix is tridiagonal
 template <typename T>
 tridiagonalMatrix<T> denseMatrix<T>::toTridiagonal()const
 {
@@ -890,7 +885,7 @@ tridiagonalMatrix<T> denseMatrix<T>::toTridiagonal()const
         throw std::out_of_range( "Not a square matrix");
     }
     
-    lowerMatrix<T> temp(m_column_size);
+    tridiagonalMatrix<T> temp(m_column_size);
 
     for(int i = 0; i < m_column_size; i++)
     {
@@ -914,16 +909,13 @@ symmetricMatrix<T> denseMatrix<T>::toSymmetric()const
         throw std::out_of_range( "Not a square matrix");
     }
     
-    lowerMatrix<T> temp(m_column_size);
+    symmetricMatrix<T> temp(m_column_size);
 
     for(int i = 0; i < m_column_size; i++)
     {
         for(int j = 0; j < m_row_size; j++)
         {
-            if(i == j)
-            {
-                temp(i,j) = m_matrix[i][j];
-            }
+            temp(i,j) = m_matrix[i][j];
         }
     }
     return temp;
