@@ -23,7 +23,7 @@ int main(int argc,  char * argv[])
             fs >> loop;
             denseMatrix<double> matrix(loop); 
             myvector<double> b_vector(loop);
-            bool sameTranspose = false;
+            // bool sameTranspose = false;
             myvector<double> x;
             
             for(int i = 0; i < loop; i++)
@@ -115,7 +115,7 @@ int main(int argc,  char * argv[])
             {
                 denseMatrix<double> temp(matrix);
                 diagonalMatrix<double> matrix = temp.toDiagonal();
-                sameTranspose = true;
+                // sameTranspose = true;
 
                 std::cout << "A * A^T:\n";
 
@@ -144,7 +144,7 @@ int main(int argc,  char * argv[])
             {
                 denseMatrix<double> temp(matrix);
                 symmetricMatrix<double> matrix = temp.toSymmetric();
-                sameTranspose = true;
+                // sameTranspose = true;
 
                 std::cout << "A * A^T:\n";
 
