@@ -1,21 +1,11 @@
-//Guassian Elimnation for denseMatrix
+//Guassian Elimination for denseMatrix
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvector<T>& b)const
 {
+    /*
     int size = set.getColumnSize();
-    denseMatrix<T> aug_matrix(set.getRowSize()+1);
+    denseMatrix<T> aug_matrix(set.getRowSize;
     denseMatrix<T> matrix = set;
-    
-    //Make the augmented matrix
-    for(int i = 0; i < set.getColumnSize(); i++)
-    {
-        for(int j = 0; j < set.getRowSize(); j++)
-        {
-            aug_matrix[i][j] = set[i][j];
-        }
-        
-        aug_matrix[i][aug_matrix.getRowSize()-1] = b[i];
-    }
 
     myvector<T> x(size);
     
@@ -86,10 +76,70 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
     }
 
     return x;
+    */
+
+   denseMatrix<T> matrixA(set);
+   myvector<T> vectorB(b);
+
+   int matrix_size = set.getSize();
+
+
+   for(int i = 0; i < matrix_size; i++)
+   {    
+       //looking for the maximum in this column;
+        T max_element = abs(matrixA[i][i]);
+        int max_row = i;
+        for(int j = j+1; j < matrix_size; j++)
+        {
+            if(abs(matrixA[j][i]) > max_element)
+            {
+                max_element = abs(matrixA[j][i]);
+                max_row = j;
+            }
+        }
+
+        //swap maximum row with current row (column by column)
+        for(int j = i; j < n+1; j++)
+        {
+            T temp = matrixA[max_row][j];
+            A[max_row][j] = A[i][j];
+            A[i][j] = temp;
+        }
+
+        //make all rows below this one 0 in the current column
+        for(int j = j+1; j < n; j++)
+        {
+            T c = -(matrixA[j][i]/matrixA[i][i]);
+            for(int k = i; k < n+1; j++)
+            {
+                if(i == k)
+                {
+                    matrixA[j][k] = 0;
+                }
+                else
+                {
+                    matrixA[j][k] += c * matrixA[i][k];
+                }
+            }
+        }
+   }
+
+   myvector<T> solution_vec(matrix_size);
+    for(int i = matrix_size-1; i >= 0; i--)
+    {
+        solution_vec[i] = matrixA[i][matrix_size]/matrixA[i][i];
+        for(int k = i-1; k >= 0; k--)
+        {
+            matrixA[k][matrix_size] -= matrixA[k][i] * solution_vec[i];
+        }
+    }
+    return solution_vec;
+
+
 
 }
 
-//Guassian Elimnation for upperMatrix
+//Guassian Elimination for upperMatrix
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const upperMatrix<T>& set, const myvector<T>& b)const
 {
@@ -119,7 +169,7 @@ myvector<T> Gaussian_solver::operator()(const upperMatrix<T>& set, const myvecto
 
 }
 
-//Guassian Elimnation for lowerMatrix
+//Guassian Elimination for lowerMatrix
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const lowerMatrix<T>& set, const myvector<T>& b)const
 {
@@ -151,83 +201,9 @@ myvector<T> Gaussian_solver::operator()(const lowerMatrix<T>& set, const myvecto
     }
 }
 
-//Thomas Algorithm for tridiaognalMatrix
-template <typename T>
-myvector<T> Gaussian_solver::operator()(const tridiagonalMatrix<T>& set, const myvector<T>& b)const
-{
-    if(set.getSize() == b.getSize())
-    {   
-        tridiagonalMatrix<T> duplicateM = set;
-        myvector<T> duplicateV = b;
-        myvector<T> solution(b.getSize());
-
-        int iter = set.getSize() - 1;
-
-        for(int i = 1; i < iter+1; i++)
-        {
-            duplicateM(i, i-1) = duplicateM(i, i-1) / duplicateM(i-1, i-1);
-            duplicateM(i,i) = duplicateM(i,i) - duplicateM(i, i-1) * duplicateM(i-1, i); 
-            duplicateV[i] = duplicateV[i] - duplicateM(i, i-1) * duplicateV[i-1];
-        }
-
-        solution[iter] = (duplicateV[iter] / duplicateM(iter,iter));
-
-        for(int i = iter; i-- > 0;)
-        {
-            solution[i] = (duplicateV[i] - ((duplicateM(i,i+1) * solution[i+1]))) / duplicateM(i,i);
-        }
-        return solution;
-    }
-    else
-    {
-        throw std::out_of_range("Size not equal");
-    }
-    
-}
-
-//Cholesky Algorithm for symmetricMatrix
+//Guassian Elimination for symmetricMatrix
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const symmetricMatrix<T>& set, const myvector<T>& b)const
 {
-    if(set.getSize() == b.getSize())
-    {   
-        Gaussian_solver gs;
-        int n = set.getSize();
-        lowerMatrix<T> lower(n);
-        myvector<T> y;
-  
-        for (int i = 0; i < n; i++) 
-        { 
-            for (int j = 0; j <= i; j++) 
-            { 
-                double sum = 0; 
-    
-                if (j == i)  
-                { 
-                    for (int k = 0; k < j; k++) 
-                    {
-                        sum += pow(lower(j,k), 2); 
-                    }
-                    lower(j,j) = sqrt(set(j,j) - sum); 
-                } 
-                else 
-                {  
-                    for (int k = 0; k < j; k++) 
-                    {
-                        sum += (lower(i,k) * lower(j,k)); 
-                    }
-                    lower(i,j) = (set(i,j) - sum) / lower(j,j); 
-                } 
-            } 
-        } 
-        
-        y = gs(lower,b);
-        return gs(lower.transpose(), y);
-       
-    }
-    else
-    {
-        throw std::out_of_range("Size not equal");
-    }
-    
+
 }

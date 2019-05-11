@@ -1,21 +1,21 @@
-#ifndef GAUSSIAN_H
-#define GAUSSIAN_H
+#ifndef GAUSSIAN2_H
+#define GAUSSIAN2_H
 
 #include "vector.h"
 #include <cmath>
 
 /*! Gaussian solver class
  *
- * Guassian class with operator() overloaded to solve an augmented matrix with guassian elimnation
+ * Guassian class with operator() overloaded to solve an augmented matrix with guassian Elimination
  *
  */
 class Gaussian_solver
 {
     public:
 
-        /*! operator () Guassian Elimnation for denseMatrix
+        /*! operator () Guassian Elimination for denseMatrix
          *
-         * \param &set denseMatrix class to use gussian elimnation to
+         * \param &set denseMatrix class to use gussian elimination to
          * \param b   myvector class to augment the matrix with     
          *     
          * *\return A myvector class with the solution to the augmented matrix 
@@ -39,9 +39,9 @@ class Gaussian_solver
         template <typename T>
         myvector<T> operator()(const denseMatrix<T>& set, const myvector<T>& b)const;
 
-        /*! operator () Guassian Elimnation for upperMatrix
+        /*! operator () Guassian Elimination for upperMatrix
          *
-         * \param &set upperMatrix class to use gussian elimnation to
+         * \param &set upperMatrix class to use gussian elimination to
          * \param b   myvector class to augment the matrix with     
          *     
          * *\return A myvector class with the solution to the augmented matrix 
@@ -65,9 +65,9 @@ class Gaussian_solver
         template <typename T>
         myvector<T> operator()(const upperMatrix<T>& set, const myvector<T>& b)const;
 
-        /*! operator () Guassian Elimnation for lowerMatrix
+        /*! operator () Guassian Elimination for lowerMatrix
          *
-         * \param &set lowerMatrix class to use gussian elimnation to
+         * \param &set lowerMatrix class to use gussian elimination to
          * \param b   myvector class to augment the matrix with     
          *     
          * *\return A myvector class with the solution to the augmented matrix 
@@ -91,38 +91,10 @@ class Gaussian_solver
         template <typename T>
         myvector<T> operator()(const lowerMatrix<T>& set, const myvector<T>& b)const;
 
-        /*! operator () Thomas Algorithm for tridiagonalMatrix
+        /*! operator () Guassian Elimination for symmetricMatrix
          *
-         * \param &set tridiagonalMatrix class to use Thomas Algorithm to
-         * \param b myvector class to augment the matrix with     
-         *     
-         * *\return A myvector class with the solution to the augmented matrix 
-         *
-         * \pre Rhs myvector class and lhs myvector class must have the same size
-         *      and value assign to all index in the array 
-         *      tridiagonalMatrix [] operator must be implmented
-         *      = must be implemented for tridiagonalMatrix
-         *      Scalar multiplication must be define for tridiagonalMatrix class
-         *      myvector [] operator must be implmented
-         *      tridiagonalMatrix overloaded () must be defined
-         *      getSize must be defined for tridiagonalMatrix
-         *      = must be implemented for myvector
-         *      fabs() must be define
-         *      myvector getmax() function must be define
-         *      T / T must be define
-         *      T * T must be define
-         *      Parametized constructor (int) must be implemented for tridiagonalMatrix class
-         *      Parametized (int,int) must be implemented to access data
-         *      
-         * 
-         */
-        template <typename T>
-        myvector<T> operator()(const tridiagonalMatrix<T>& set, const myvector<T>& b)const;
-
-        /*! operator () Cholesky Algorithm for symmetricMatrix
-         *
-         * \param &set symmetricMatrix class to use Cholesky Algorithm to
-         * \param b myvector class to augment the matrix with     
+         * \param &set symmetricMatrix class to use gussian elimination to
+         * \param b   myvector class to augment the matrix with     
          *     
          * *\return A myvector class with the solution to the augmented matrix 
          *
@@ -138,17 +110,12 @@ class Gaussian_solver
          *      fabs() must be define
          *      myvector getmax() function must be define
          *      T / T must be define
-         *      T * T must be define
          *      Parametized constructor (int) must be implemented for symmetricMatrix class
-         *      Parametized (int,int) must be implemented to access data
          *      
          * 
          */
         template <typename T>
         myvector<T> operator()(const symmetricMatrix<T>& set, const myvector<T>& b)const;
-
-        
-
 
 };
 
