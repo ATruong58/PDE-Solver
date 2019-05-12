@@ -5,6 +5,8 @@
 #include "tridiagonalMatrix.h"
 #include "symmetricMatrix.h"
 #include "gaussian.h"
+#include "thomas.h"
+#include "cholesky.h"
 #include <fstream>
 
 int main(int argc,  char * argv[])

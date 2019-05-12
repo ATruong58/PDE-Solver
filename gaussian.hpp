@@ -99,7 +99,7 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
         }
 
         //swap maximum row with current row (column by column)
-        for(int j = i; j < n+1; j++)
+        for(int j = i; j < matrix_size+1; j++)
         {
             T temp = matrixA[max_row][j];
             A[max_row][j] = A[i][j];
@@ -107,10 +107,10 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
         }
 
         //make all rows below this one 0 in the current column
-        for(int j = j+1; j < n; j++)
+        for(int j = j+1; j < matrix_size; j++)
         {
             T c = -(matrixA[j][i]/matrixA[i][i]);
-            for(int k = i; k < n+1; j++)
+            for(int k = i; k < matrix_size+1; j++)
             {
                 if(i == k)
                 {
