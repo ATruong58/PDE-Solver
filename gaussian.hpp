@@ -2,10 +2,9 @@
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvector<T>& b)const
 {
-    /*
     int size = set.getColumnSize();
-    denseMatrix<T> aug_matrix(set.getRowSize;
     denseMatrix<T> matrix = set;
+    myvector<T> bvector = b;
 
     myvector<T> x(size);
     
@@ -33,29 +32,31 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
         }
 
         // Swap maximum row with current row
-        temp = aug_matrix[maxRow];
-        aug_matrix[maxRow] = aug_matrix[i];
-        aug_matrix[i] = temp;
+        temp = matrix[maxRow];
+        matrix[maxRow] = matrix[i];
+        matrix[i] = temp;
 
         // Make all rows below this one 0 in current column
         for(int j = i+1; j < size; j++) 
         {
-            if(aug_matrix[i][i] == 0)
+            if(matrix[i][i] == 0)
             {
                 throw std::out_of_range( "Dividing by zero");
             }
-            double scale = -aug_matrix[j][i]/aug_matrix[i][i];
+            double scale = -matrix[j][i]/matrix[i][i];
             for(int k = i; k < size+1; k++)
-            {
+            {   
                 if(i==k)
                 {
-                    aug_matrix[j][k] = 0;
+                    matrix[j][k] = 0;
                 } 
                 else
                 {
-                    aug_matrix[j][k] += scale * aug_matrix[i][k];
+                    matrix[j][k] += scale * matrix[i][k];
+                    
                 }
             }
+            bvector[j] += scale * bvector[i];
         }
     }
 
@@ -63,79 +64,19 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
     for(int i = size-1; i >= 0; i--)
     {
         //round the number to 8 decimal place
-        if(aug_matrix[i][i] == 0)
+        if(matrix[i][i] == 0)
         {
             throw std::out_of_range( "Dividing by zero");
         }
-        x[i] = round(aug_matrix[i][size]/aug_matrix[i][i] *100000000.0) /100000000.0;
+        x[i] = round(bvector[i]/matrix[i][i] *100000000.0) /100000000.0;
         
         for (int k = i-1 ; k >= 0; k--)
         {
-            aug_matrix[k][size] -= aug_matrix[k][i] * x[i];
+            bvector[k] -= matrix[k][i] * x[i];
         }
     }
 
     return x;
-    */
-
-   denseMatrix<T> matrixA(set);
-   myvector<T> vectorB(b);
-
-   int matrix_size = set.getSize();
-
-
-   for(int i = 0; i < matrix_size; i++)
-   {    
-       //looking for the maximum in this column;
-        T max_element = abs(matrixA[i][i]);
-        int max_row = i;
-        for(int j = j+1; j < matrix_size; j++)
-        {
-            if(abs(matrixA[j][i]) > max_element)
-            {
-                max_element = abs(matrixA[j][i]);
-                max_row = j;
-            }
-        }
-
-        //swap maximum row with current row (column by column)
-        for(int j = i; j < n+1; j++)
-        {
-            T temp = matrixA[max_row][j];
-            A[max_row][j] = A[i][j];
-            A[i][j] = temp;
-        }
-
-        //make all rows below this one 0 in the current column
-        for(int j = j+1; j < n; j++)
-        {
-            T c = -(matrixA[j][i]/matrixA[i][i]);
-            for(int k = i; k < n+1; j++)
-            {
-                if(i == k)
-                {
-                    matrixA[j][k] = 0;
-                }
-                else
-                {
-                    matrixA[j][k] += c * matrixA[i][k];
-                }
-            }
-        }
-   }
-
-   myvector<T> solution_vec(matrix_size);
-    for(int i = matrix_size-1; i >= 0; i--)
-    {
-        solution_vec[i] = matrixA[i][matrix_size]/matrixA[i][i];
-        for(int k = i-1; k >= 0; k--)
-        {
-            matrixA[k][matrix_size] -= matrixA[k][i] * solution_vec[i];
-        }
-    }
-    return solution_vec;
-
-
 
 }
 
@@ -205,5 +146,18 @@ myvector<T> Gaussian_solver::operator()(const lowerMatrix<T>& set, const myvecto
 template <typename T>
 myvector<T> Gaussian_solver::operator()(const symmetricMatrix<T>& set, const myvector<T>& b)const
 {
+
+    symmetricMatrix<T> matrix = set;
+    denseMatrix<T> copy(matrix.getSize());
+    for(int i = 0; i < matrix.getSize(); i++)
+    {
+        for (int j = 0; j < matrix.getSize(); j++)
+        {
+            copy[i][j] = matrix(i,j);
+        }
+    }
+
+    return this->operator()(copy,b);
+
 
 }

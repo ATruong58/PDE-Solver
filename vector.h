@@ -184,6 +184,11 @@ class myvector
          * \return m_size
          */
         int getSize()const;
+
+        /*! Remove First element
+         *
+        */
+        myvector<T> removeFirst()const;
 };
 
         /*! Stream insertion operator for myvector class.

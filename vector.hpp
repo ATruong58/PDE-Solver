@@ -207,13 +207,27 @@ int myvector<T>::getSize()const
     return m_size;
 }
 
+//Remove first
+template <typename T>
+myvector<T> myvector<T>::removeFirst()const
+{
+    myvector<T> temp(m_size-1);
+    
+    for(int i = 1; i < m_size; i++)
+    {
+        temp[i-1] = m_array[i];
+    }
+
+    return temp;
+}
+
 //Output
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const myvector<T> &obj)
 {
     for(int i = 0; i < obj.getSize(); i++)
     {
-        os << obj[i] << " ";
+        os << obj[i] << std::endl;
     }
     return os;  
 }
@@ -330,10 +344,9 @@ void guass_Sidel(const std::vector<T>& matrix)
 
         for(int i = 0; i < loop; i++)
         {
-            std::cout << x[i] << " ";
+            std::cout << x[i] << std::endl;
         }  
 
-        std::cout << std::endl;
 
     }
     else

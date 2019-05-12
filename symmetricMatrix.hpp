@@ -81,7 +81,7 @@ denseMatrix<T> symmetricMatrix<T>::operator+(const matrix<T> &rhs)const
     const symmetricMatrix<T> duplicate(*this);
     
     if(m_size == rhs.getSize())
-        {
+    {
         for(int i = 0; i < m_size; i++)
         {
             for(int j = 0; j < m_size; j++)
@@ -158,7 +158,7 @@ symmetricMatrix<T> symmetricMatrix<T>::operator+(const symmetricMatrix<T> &rhs)c
     symmetricMatrix<T> temp(m_size,m_size);
     
     if(m_size == rhs.getSize())
-        {
+    {
         for(int i = 0; i < m_size; i++)
         {
             temp[i] = m_matrix[i] + rhs.m_matrix[i];
