@@ -25,7 +25,8 @@ int main(int argc, char * argv[])
         {
             Gaussian_solver GS;
             Cholesky_solver CS;
-            pdeProblem<double,double> a(sin);
+            auto ret0 = [](double num){num++; return 0.0;};
+            pdeProblem<double,double,double,double,double,double,double,double,double> a(sin, ret0, sin, ret0, M_PI);
             pdeSolver b;
             myvector<double> solution;
             double norm = 0;

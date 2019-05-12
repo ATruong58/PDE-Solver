@@ -34,8 +34,8 @@ class pdeSolver
          *      Parametized constructor (int,int) must be implemented for symmetricMatrix class
          * 
          */
-        template <typename T, typename U, typename V>
-        myvector<T> operator()(pdeProblem<T,U> &P, int n, V method);
+        template <typename T, typename U, typename V,  typename W,  typename A,  typename B,  typename C,  typename D,  typename E, typename F>
+        myvector<T> operator()(pdeProblem<T,U,V,W,A,B,C,D,E> &P, int n, F method);
 };
 
 #include "pdeSolver.hpp"
