@@ -186,7 +186,7 @@ template <typename T>
 T myvector<T>::getmax()const
 {
     T max = 0;
-    int max_index;
+    int max_index = 0;
 
     for(int i = 0; i < m_size; i++)
     {
