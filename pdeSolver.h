@@ -6,7 +6,6 @@
  * preProblem class to solve a pdeProblem
  *
  */
-template <class T, class U>
 class pdeSolver
 {
     public:
@@ -35,7 +34,8 @@ class pdeSolver
          *      Parametized constructor (int,int) must be implemented for symmetricMatrix class
          * 
          */
-        myvector<T> operator()(pdeProblem<T,U> &P, int n);
+        template <typename T, typename U, typename V>
+        myvector<T> operator()(pdeProblem<T,U> &P, int n, V method);
 };
 
 #include "pdeSolver.hpp"

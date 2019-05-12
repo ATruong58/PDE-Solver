@@ -14,7 +14,6 @@ myvector<T> Cholesky_solver::operator()(const symmetricMatrix<T>& set, const myv
             for (int j = 0; j <= i; j++) 
             { 
                 double sum = 0; 
-    
                 if (j == i)  
                 { 
                     for (int k = 0; k < j; k++) 
@@ -25,6 +24,7 @@ myvector<T> Cholesky_solver::operator()(const symmetricMatrix<T>& set, const myv
                 } 
                 else 
                 {  
+                    
                     for (int k = 0; k < j; k++) 
                     {
                         sum += (lower(i,k) * lower(j,k)); 
