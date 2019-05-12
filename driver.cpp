@@ -53,7 +53,7 @@ int main(int argc, char * argv[])
             int counter = 0;
 
             double h = M_PI/n;
-            std::cout << solution << std::endl;
+            //std::cout << solution << std::endl;
 
             for(int i = 0; i < n-1 ; i++)
             {
