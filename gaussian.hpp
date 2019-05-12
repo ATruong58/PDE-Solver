@@ -30,12 +30,13 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
                 maxRow = j;
             }
         }
-
         // Swap maximum row with current row
-        temp = matrix[maxRow];
-        matrix[maxRow] = matrix[i];
-        matrix[i] = temp;
-
+	if(maxRow != i)
+	{
+		temp = matrix[maxRow];
+        	matrix[maxRow] = matrix[i];
+        	matrix[i] = temp;
+	}
         // Make all rows below this one 0 in current column
         for(int j = i+1; j < size; j++) 
         {
@@ -44,7 +45,7 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
                 throw std::out_of_range( "Dividing by zero");
             }
             double scale = -matrix[j][i]/matrix[i][i];
-            for(int k = i; k < size+1; k++)
+            for(int k = i; k < size; k++)
             {   
                 if(i==k)
                 {
@@ -59,23 +60,20 @@ myvector<T> Gaussian_solver::operator()(const denseMatrix<T>& set, const myvecto
             bvector[j] += scale * bvector[i];
         }
     }
-
     //Make the solution vector 
     for(int i = size-1; i >= 0; i--)
     {
-        //round the number to 8 decimal place
+	//round the number to 8 decimal place
         if(matrix[i][i] == 0)
         {
             throw std::out_of_range( "Dividing by zero");
         }
         x[i] = round(bvector[i]/matrix[i][i] *100000000.0) /100000000.0;
-        
         for (int k = i-1 ; k >= 0; k--)
         {
-            bvector[k] -= matrix[k][i] * x[i];
+            bvector[k] = bvector[k] - matrix[k][i] * x[i];
         }
     }
-
     return x;
 
 }
@@ -148,16 +146,14 @@ myvector<T> Gaussian_solver::operator()(const symmetricMatrix<T>& set, const myv
 {
 
     symmetricMatrix<T> matrix = set;
-    denseMatrix<T> copy(matrix.getSize());
+    denseMatrix<T> stuff(matrix.getSize());
     for(int i = 0; i < matrix.getSize(); i++)
     {
         for (int j = 0; j < matrix.getSize(); j++)
         {
-            copy[i][j] = matrix(i,j);
+            stuff[i][j] = matrix(i,j);
         }
     }
-
-    return this->operator()(copy,b);
-
-
+	
+    return this->operator()(stuff,b);
 }
