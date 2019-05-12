@@ -1,12 +1,13 @@
 //Solve the pde
-template<typename T, typename U, typename V>
-myvector<T> pdeSolver::operator()(pdeProblem<T,U> &P, int n, V method)
+template<typename T, typename U, typename V,  typename W,  typename A,  typename B,  typename C,  typename D,  typename E, typename F>
+myvector<T> pdeSolver::operator()(pdeProblem<T,U,V,W,A,B,C,D,E> &P, int n, F method)
 {
     double stepSize = (1.0 / 4) * -1.0;
     int size = (n-1) * (n-1);
     symmetricMatrix<T> a_matrix(size);
     myvector<T> b_vector(size);
-    int count = 2;
+    int countleft = 2;
+    int countright = 2;
     
 
     for(int i = 0; i < size; i++)
@@ -25,20 +26,50 @@ myvector<T> pdeSolver::operator()(pdeProblem<T,U> &P, int n, V method)
 
     for(int i = 0; i < size; i++)
     {
+        //For bottom left point
         if(i == 0)
         {
-            b_vector[i] = 2 * P(M_PI/n) / 4;
+            b_vector[i] = (P.left(P.upperBound/n) / 4) + (P.lower(P.upperBound/n) / 4);
         }
+        //For bottom right point
+        else if(i == n-2 )
+        {
+            b_vector[i] = (P.right(P.upperBound/n) / 4) + (P.lower(P.upperBound/n) / 4);
+        }
+        //For top left point
+        else if(i == size-n+1)
+        {
+             b_vector[i] = (P.left(P.upperBound/n) / 4) + (P.upper(P.upperBound/n) / 4);
+        }
+        //For top right point
+        else if(i == size-1)
+        {
+             b_vector[i] = (P.right(P.upperBound/n) / 4) + (P.upper(P.upperBound/n) / 4);
+        }
+        //For points on the bottom row that isnt a corner
         else if(i > 0 && i < n - 1)
         {
-            b_vector[i] = P(((i+1) * M_PI) / n)/ 4;
+            b_vector[i] = P.lower(((i+1) * P.upperBound) / n)/ 4;
         }
+        //For points on the left row that isnt a corner
         else if( i >= (n - 1) && i % (n - 1) == 0)
         {
-            b_vector[i] = (P((count * M_PI) / n )) / 4;
-            count++;
+            b_vector[i] = P.left((countleft * P.upperBound) / n ) / 4;
+            countleft++;
+        }
+        //For points on the right row that isnt a corner
+        else if( i >= (n-1) && (i + n - 1 ) % (n - 1) == 0)
+        {
+            b_vector[i] = P.right((countright * P.upperBound) / n ) / 4;
+            countright++;
+        } 
+        //For points on the top row that isnt a corner
+        else if(i > size - n + 1)
+        {
+            b_vector[i] = P.upper(((i-size+ n -1) * P.upperBound) / n)/ 4;
         }
     }
+
 
     return method(a_matrix, b_vector);
 }
