@@ -12,6 +12,11 @@
 #include <cstring>
 using namespace std::chrono;
 
+template <typename T> 
+T realAnswer(T x, T y)
+{
+    return (1/sinh(M_PI) * ((sin(x) * sinh(M_PI-y)) + ((sin(y) * sinh(M_PI-x)))));
+}
 
 int main(int argc, char * argv[])
 {
@@ -24,6 +29,7 @@ int main(int argc, char * argv[])
             pdeProblem<double,double> a(sin);
             pdeSolver b;
             myvector<double> solution;
+            double norm = 0;
             int n = atoi(argv[1]);
 
             auto start = high_resolution_clock::now(); 
@@ -42,12 +48,33 @@ int main(int argc, char * argv[])
             auto stop = high_resolution_clock::now(); 
             auto duration = duration_cast<microseconds>(stop - start); 
 
-            std::cout << "Time take to use " << argv[2] << " to run N size of " << n << " : "
-                  << duration.count() * .000001 << " seconds" << std::endl;
 
+            myvector<double> exactAnswer(solution.getSize());
+            int counter = 0;
+
+            double h = M_PI/n;
             std::cout << solution << std::endl;
 
-            
+            for(int i = 0; i < n-1 ; i++)
+            {
+                for(int j = 0; j < n-1; j++)
+                {
+                    exactAnswer[counter] = realAnswer((j+1)* M_PI/n , (i+1) * M_PI/n);
+                    counter++;
+                }
+            }
+
+            for(int i = 0; i < solution.getSize(); i++)
+            {
+                norm += pow(solution[i] - exactAnswer[i],2); 
+            }
+
+
+            norm = sqrt(pow(h,2) * norm);
+
+            std::cout << "Time take to use " << argv[2] << " to run N size of " << n << " : " << duration.count() * .000001 << " seconds\n";
+            std::cout << "The percent error using norm is: "<< norm * 100 << "% "<<std::endl;
+
         }
         else
         {

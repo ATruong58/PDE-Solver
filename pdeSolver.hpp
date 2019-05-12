@@ -2,7 +2,7 @@
 template<typename T, typename U, typename V>
 myvector<T> pdeSolver::operator()(pdeProblem<T,U> &P, int n, V method)
 {
-    double stepSize = (1.0 / n) * -1.0;
+    double stepSize = (1.0 / 4) * -1.0;
     int size = (n-1) * (n-1);
     symmetricMatrix<T> a_matrix(size);
     myvector<T> b_vector(size);
